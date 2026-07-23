@@ -181,7 +181,7 @@ function PricingCard({ plan, index, inView }) {
         }}>
           <span style={{ fontSize: 14, fontWeight: 500, color: isDark ? "rgba(255,255,255,0.4)" : "#aaa" }}>£</span>
           <span style={{
-            fontSize: 52, fontWeight: 800, letterSpacing: -3, lineHeight: 1,
+            fontSize: "clamp(40px, 6vw, 52px)", fontWeight: 800, letterSpacing: -3, lineHeight: 1,
             color: isDark ? "#fff" : DARK,
             fontFamily: "Georgia, 'Times New Roman', serif",
           }}>{plan.price}</span>
@@ -394,7 +394,7 @@ export default function PricingSection() {
           <span style={{ width: 20, height: 1.5, background: ACCENT, borderRadius: 1 }} />
         </div>
         <h2 style={{
-          fontSize: 44, fontWeight: 800, color: DARK,
+          fontSize: "clamp(32px, 5vw, 44px)", fontWeight: 800, color: DARK,
           lineHeight: 1.12, letterSpacing: -1.5,
           fontFamily: "Georgia, 'Times New Roman', serif",
           margin: "0 0 16px",

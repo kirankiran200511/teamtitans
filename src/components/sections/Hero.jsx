@@ -70,36 +70,79 @@ function Particles() {
 function Nav({ scrolled }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
+    <>
     <nav style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 50,
       display: "flex", alignItems: "center", justifyContent: "space-between",
-      padding: scrolled ? "12px 40px" : "18px 40px",
-      background: scrolled ? "rgba(15,19,32,0.95)" : "transparent",
+      padding: scrolled ? "12px 20px" : "18px 20px",
+      background: scrolled ? "rgba(15,19,32,0.98)" : "transparent",
       backdropFilter: scrolled ? "blur(16px)" : "none",
       borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
       transition: "all 0.35s ease",
     }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 4, zIndex: 51 }}>
         <img src="/images/logo.png" alt="Team Titans" style={{ height: 38 }} />
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+      
+      {/* Mobile Hamburger */}
+      <div className={`hero-nav-hamburger ${mobileOpen ? 'active' : ''}`} onClick={() => setMobileOpen(!mobileOpen)} style={{ zIndex: 51 }}>
+        <span style={{ background: "#fff" }}></span>
+        <span style={{ background: "#fff" }}></span>
+        <span style={{ background: "#fff" }}></span>
+      </div>
+
+      <div className={`hero-nav-links ${mobileOpen ? 'open' : ''}`}>
         {["How it works", "Next event", "Membership", "Results", "FAQ"].map(link => (
-          <a key={link} href="#" style={{
-            fontSize: 13.5, fontWeight: 500, color: "rgba(255,255,255,0.55)",
+          <a key={link} href={`#${link.toLowerCase().replace(" ", "-")}`} style={{
+            fontSize: 14, fontWeight: 500, color: "rgba(255,255,255,0.7)",
             textDecoration: "none", transition: "color 0.2s", letterSpacing: 0.1,
+            whiteSpace: "nowrap"
           }} onMouseEnter={e => e.target.style.color = "#fff"}
-             onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.55)"}
+             onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.7)"}
+             onClick={() => setMobileOpen(false)}
           >{link}</a>
         ))}
-        <button style={{
-          background: "#DC2626", color: "#fff", border: "none", borderRadius: 28,
-          padding: "10px 22px", fontSize: 13.5, fontWeight: 600, cursor: "pointer",
-          transition: "all 0.2s", letterSpacing: 0.2,
-        }} onMouseEnter={e => { e.target.style.background = "#b91c1c"; e.target.style.transform = "translateY(-1px)"; }}
-           onMouseLeave={e => { e.target.style.background = "#DC2626"; e.target.style.transform = "translateY(0)"; }}
-        >Secure your spot</button>
+        <a href="#book" style={{
+          background: "linear-gradient(135deg, var(--gold-light), var(--gold))", color: "#fff", border: "none", borderRadius: 28,
+          padding: "10px 22px", fontSize: 13.5, fontWeight: 700, cursor: "pointer", textDecoration: "none",
+          transition: "all 0.2s", letterSpacing: 0.2, boxShadow: "0 4px 15px rgba(245, 158, 11, 0.3)",
+        }} onMouseEnter={e => { e.target.style.transform = "translateY(-2px)"; }}
+           onMouseLeave={e => { e.target.style.transform = "translateY(0)"; }}
+           onClick={() => setMobileOpen(false)}
+        >Secure your spot</a>
       </div>
     </nav>
+    <style>{`
+      .hero-nav-hamburger {
+        display: none; width: 28px; height: 18px;
+        flex-direction: column; justify-content: space-between;
+        cursor: pointer;
+      }
+      .hero-nav-hamburger span {
+        display: block; width: 100%; height: 2px; border-radius: 2px;
+        transition: all 0.3s;
+      }
+      .hero-nav-hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+      .hero-nav-hamburger.active span:nth-child(2) { opacity: 0; }
+      .hero-nav-hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+      
+      .hero-nav-links { display: flex; align-items: center; gap: 28px; }
+
+      @media (max-width: 992px) {
+        .hero-nav-hamburger { display: flex; }
+        .hero-nav-links {
+          position: fixed; top: 0; right: -100%;
+          width: 100%; height: 100vh;
+          background: rgba(15,19,32,0.98);
+          backdrop-filter: blur(20px);
+          flex-direction: column; justify-content: center; gap: 24px;
+          transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero-nav-links.open { right: 0; }
+        .hero-nav-links a { font-size: 18px !important; }
+      }
+    `}</style>
+    </>
   );
 }
 
@@ -254,7 +297,7 @@ export default function Hero() {
 
             {/* Headline */}
             <h1 style={{
-              fontSize: 64, fontWeight: 800, lineHeight: 1.15, letterSpacing: -1.5,
+              fontSize: "clamp(36px, 6vw, 64px)", fontWeight: 800, lineHeight: 1.15, letterSpacing: -1.5,
               color: "#fff", margin: "0 0 24px 0",
               fontFamily: "Georgia, 'Times New Roman', serif",
             }}>
@@ -271,7 +314,7 @@ export default function Hero() {
 
             {/* Subhead */}
             <p style={{
-              fontSize: 19, lineHeight: 1.7, color: "rgba(255,255,255,0.6)",
+              fontSize: "clamp(16px, 3vw, 19px)", lineHeight: 1.7, color: "rgba(255,255,255,0.6)",
               maxWidth: 680, margin: "0 auto 40px auto",
             }}>
               120+ investors, developers and property professionals in one room — with expert speakers, hot buffet, and connections that turn into real deals.
