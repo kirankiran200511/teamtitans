@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom'
 import Preloader from './components/Preloader'
 import ScrollProgress from './components/ScrollProgress'
 import Hero from './components/sections/Hero'
@@ -14,17 +15,17 @@ import FinalCta from './components/sections/FinalCta'
 import StickyCta from './components/StickyCta'
 import SocialProofToast from './components/SocialProofToast'
 import Footer from './components/Footer'
+import BecomeHost from './pages/BecomeHost'
 import useScrollReveal from './hooks/useScrollReveal'
 
-function App() {
-  // Initialize IntersectionObserver for scroll reveals
+function HomePage() {
   useScrollReveal();
 
   return (
     <>
       <Preloader />
       <ScrollProgress />
-      
+
       <main>
         <Hero />
         <ChoosePath />
@@ -43,6 +44,15 @@ function App() {
       <SocialProofToast />
       <Footer />
     </>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/become-a-host" element={<BecomeHost />} />
+    </Routes>
   )
 }
 

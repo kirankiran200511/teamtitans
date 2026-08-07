@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
   return (
     <footer className="footer" id="footer">
@@ -9,6 +11,7 @@ export default function Footer() {
             <a href="#event" className="footer__link">Next Event</a>
             <a href="#membership" className="footer__link">Membership</a>
             <a href="#faq" className="footer__link">FAQ</a>
+            <Link to="/become-a-host" className="footer__link">Become a Host</Link>
             <a href="https://teamtitans.co.uk/" className="footer__link" target="_blank" rel="noopener noreferrer">Main Site</a>
           </div>
         </div>

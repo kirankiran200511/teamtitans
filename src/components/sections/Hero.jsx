@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const EVENT_DATE = "Wednesday, 30 July";
 const EVENT_TIME = "6:30 PM – 9:30 PM";
@@ -102,6 +103,14 @@ function Nav({ scrolled }) {
              onClick={() => setMobileOpen(false)}
           >{link}</a>
         ))}
+        <Link to="/become-a-host" style={{
+          fontSize: 14, fontWeight: 500, color: "rgba(255,255,255,0.7)",
+          textDecoration: "none", transition: "color 0.2s", letterSpacing: 0.1,
+          whiteSpace: "nowrap"
+        }} onMouseEnter={e => e.target.style.color = "#fff"}
+           onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.7)"}
+           onClick={() => setMobileOpen(false)}
+        >Become a Host</Link>
         <a href="#book" style={{
           background: "linear-gradient(135deg, var(--gold-light), var(--gold))", color: "#fff", border: "none", borderRadius: 28,
           padding: "10px 22px", fontSize: 13.5, fontWeight: 700, cursor: "pointer", textDecoration: "none",
