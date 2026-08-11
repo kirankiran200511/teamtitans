@@ -1,0 +1,24 @@
+"use client";
+import Hero from '../components/sections/Hero';
+import MeetTheHost from '../components/sections/MeetTheHost';
+import Speakers from '../components/sections/Speakers';
+import Benefits from '../components/sections/Benefits';
+import Membership from '../components/sections/Membership';
+import Partners from '../components/sections/Partners';
+import Gallery from '../components/sections/Gallery';
+import Faq from '../components/sections/Faq';
+
+export default function Home() {
+  return (
+    <>
+      <Hero />
+      <MeetTheHost />
+      <Speakers />
+      <Benefits />
+      <Membership />
+      <Partners />
+      <Gallery />
+      <Faq />
+    </>
+  );
+}
