@@ -14,7 +14,34 @@
       "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
     }
   ],
-  "headers": [],
+  "headers": [
+    {
+      "source": "/:path*",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        }
+      ],
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
+    }
+  ],
   "onMatchHeaders": [],
   "rewrites": {
     "beforeFiles": [],
@@ -29,6 +56,14 @@
         "nxtPslug": "nxtPslug"
       },
       "namedRegex": "^/locations/(?<nxtPslug>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/membership/[plan]",
+      "regex": "^/membership/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPplan": "nxtPplan"
+      },
+      "namedRegex": "^/membership/(?<nxtPplan>[^/]+?)(?:/)?$"
     }
   ],
   "staticRoutes": [
@@ -55,6 +90,18 @@
       "regex": "^/about(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/about(?:/)?$"
+    },
+    {
+      "page": "/api/reserve",
+      "regex": "^/api/reserve(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/reserve(?:/)?$"
+    },
+    {
+      "page": "/gallery",
+      "regex": "^/gallery(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/gallery(?:/)?$"
     },
     {
       "page": "/host",

@@ -2,6 +2,7 @@ import '../index.css';
 import '../titans.css';
 import '../locations.css';
 import '../becomehost.css';
+import '../membership.css';
 
 import Preloader from '../components/Preloader';
 import ScrollProgress from '../components/ScrollProgress';

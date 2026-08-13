@@ -3,36 +3,28 @@ import { useState } from 'react';
 
 const FAQS = [
   {
-    q: "Where are Titans events held?",
-    a: "All main Titans events are held at the Crowne Plaza in Beaconsfield, Buckinghamshire. It's a premium venue with excellent transport links, free parking, and on-site accommodation if you'd like to stay overnight. Coffee mornings and site tours may be held at different locations."
+    q: "Where is the event being held?",
+    a: "Crowne Plaza, Oxford Road, Beaconsfield HP9 2XE. Walk to the \"Gerrard's Suite,\" which is to the right of the hotel."
   },
   {
-    q: "Who is Titans for?",
-    a: "Titans is for property business owners, developers, entrepreneurs, investors, brokers, advisers, construction professionals, legal specialists, and accountants. Whether you're just starting out or you run a scaled portfolio, the events and community are designed to be valuable at every level."
+    q: "Is there parking at the event?",
+    a: "Yes, there is parking to the left and right of the hotel."
   },
   {
-    q: "What's the difference between a single ticket and membership?",
-    a: "A single ticket gives you access to one Titans main event — including the buffet, networking, and keynotes. Membership (Gold or Corporate) gives you ongoing access to all events, plus extras like event recordings, coffee mornings, site tours, WhatsApp community, guest discounts, mentoring, and strategy sessions depending on your tier."
+    q: "How can I become a VIP?",
+    a: "Email the Titans team (info@teamtitans.co.uk) or scroll up to the checkout page for VIPs."
   },
   {
-    q: "Can I cancel my membership?",
-    a: "Gold VIP memberships have a 6-month minimum commitment to ensure you get the full benefit of the community. After the initial period, you can cancel with 30 days' notice. Corporate memberships can cancel anytime with no minimum term."
+    q: "When does the event start & finish?",
+    a: "Registration starts at 5:30pm. Finishing times vary between 9:30–10pm."
   },
   {
-    q: "Is accommodation available near the venue?",
-    a: "Yes. The Crowne Plaza Beaconsfield has on-site accommodation. We recommend booking directly with the hotel if you'd like to stay overnight. There are also several nearby hotels and B&Bs in the Beaconsfield area. Let the team know if you'd like recommendations."
+    q: "Is there accommodation at the event?",
+    a: "Yes, accommodation is available — ask Titans to get a discount."
   },
   {
-    q: "Do members get guest discounts?",
-    a: "Yes. Gold and Corporate members can bring guests to Titans events at a discounted rate. This is a great way to introduce business partners, colleagues, or friends to the community. Check your membership dashboard for current guest discount details."
-  },
-  {
-    q: "I'm a complete beginner — will I still get value?",
-    a: "Absolutely. Titans events are designed to be valuable for everyone from first-time investors to seasoned developers. The speakers cover both foundational and advanced topics, and the networking is structured so you can meet people at every experience level. Many of our most successful members started as complete beginners."
-  },
-  {
-    q: "How can I get help or ask questions?",
-    a: "You can reach the Titans team directly through the website contact form, by email, or via our WhatsApp community. We respond personally — no bots, no auto-replies. If you need help choosing the right membership or have questions about an upcoming event, we're happy to help."
+    q: "If I have more questions, who can I speak with?",
+    a: "Email the Titans team for any help."
   }
 ];
 

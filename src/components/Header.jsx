@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import { goTo } from '../lib/router';
 
 /**
@@ -10,7 +11,7 @@ import { goTo } from '../lib/router';
  */
 const NAV_LINKS = [
   { label: 'Locations', href: '#/locations' },
-  { label: 'Gallery', href: '#gallery' },
+  { label: 'Gallery', href: '#/gallery' },
   { label: 'Affiliates', href: '#partners' },
   { label: 'Sponsors', href: '#partners' },
   { label: 'Become a host', href: '#/host' },
@@ -32,6 +33,8 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const aboutRef = useRef(null);
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   useEffect(() => {
     let ticking = false;
@@ -73,27 +76,7 @@ export default function Header() {
   };
 
   return (
-    <header className={`site-header ${scrolled || menuOpen ? 'is-solid' : ''} ${scrolled ? 'is-compact' : ''}`}>
-      <div className="site-ticker" aria-label="Next event details">
-        <div className="site-ticker__inner">
-          <span className="site-ticker__item" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            <b>NEXT EVENT:</b> London
-          </span>
-          <span className="site-ticker__separator" aria-hidden="true">|</span>
-          <span className="site-ticker__item" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            Saturday, 28 June 2025
-          </span>
-          <span className="site-ticker__separator" aria-hidden="true">|</span>
-          <span className="site-ticker__item site-ticker__item--time" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            2:00&ndash;6:00 PM BST
-          </span>
-          <span className="site-ticker__item site-ticker__item--urgent">LIMITED SEATS REMAINING</span>
-        </div>
-      </div>
-
+    <header className={`site-header ${scrolled || menuOpen || !isHomePage ? 'is-solid' : ''} ${scrolled ? 'is-compact' : ''}`}>
       <div className="site-header__inner">
         <a href="/" className="site-header__logo" onClick={navigate('#/')} aria-label="Titans home">
           <img src="/images/logo.png" alt="Titans — Real Estate, Education, Collaboration" />

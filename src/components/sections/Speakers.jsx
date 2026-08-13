@@ -18,7 +18,7 @@ const STAGE = [
 const PILLARS = [
   {
     title: 'Expert keynotes',
-    desc: 'Industry leaders share the thinking behind real decisions — not recycled theory.',
+    desc: 'Industry leaders share the thinking behind real decisions - not recycled theory.',
   },
   {
     title: 'Practical education',
@@ -41,7 +41,7 @@ export default function Speakers() {
             <span className="speakers__title-accent">Real Insights</span>
           </h2>
           <p className="speakers__subtitle">
-            Every Titans event puts proven operators on stage — developers, investors and
+            Every Titans event puts proven operators on stage - developers, investors and
             specialists who are still doing the work they talk about.
           </p>
         </div>

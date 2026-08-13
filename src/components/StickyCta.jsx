@@ -1,9 +1,13 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { goTo } from '../lib/router';
 
 export default function StickyCta() {
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
+  // The plan pages carry their own price + CTA bar; two would stack.
+  const suppressed = pathname?.startsWith('/membership');
 
   useEffect(() => {
     let ticking = false;
@@ -21,6 +25,8 @@ export default function StickyCta() {
   }, []);
 
   const nav = (href) => (e) => { e.preventDefault(); goTo(href); };
+
+  if (suppressed) return null;
 
   return (
     <div className={`sticky-cta ${visible ? 'sticky-cta--visible' : ''}`}>

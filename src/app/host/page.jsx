@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import { goTo } from '../../lib/router';
+import useScrollReveal from '../../hooks/useScrollReveal';
 
 /* ─── Intersection Observer hook (triggers once) ─── */
 function useInView(threshold = 0.15) {
@@ -19,36 +20,12 @@ function useInView(threshold = 0.15) {
   return [ref, inView];
 }
 
-/* ─── Animated counter (easeOutExpo) ─── */
-function useCountUp(target, run, duration = 2200) {
-  const [n, setN] = useState(0);
-  useEffect(() => {
-    if (!run) return;
-    let frame;
-    const start = performance.now();
-    const tick = (now) => {
-      const p = Math.min(1, (now - start) / duration);
-      const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
-      setN(target * eased);
-      if (p < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [run, target, duration]);
-  return n;
-}
-
 
 /* ══════════════════════════════════════════════
    HERO
    ══════════════════════════════════════════════ */
 function HeroSection() {
   const [loaded, setLoaded] = useState(false);
-  const [statsRef, statsInView] = useInView(0.3);
-
-  const hosts = useCountUp(12, statsInView);
-  const locations = useCountUp(5, statsInView);
-  const deals = useCountUp(2.4, statsInView, 2600);
 
   useEffect(() => { requestAnimationFrame(() => setLoaded(true)); }, []);
 
@@ -199,13 +176,13 @@ function BenefitsSection() {
   return (
     <section className="section bh-benefits" id="bh-benefits">
       <div className="bh-benefits__bg"></div>
-      
+
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <div className="bh-benefits__header reveal">
           <span className="bh-benefits__eyebrow">Exclusive Perks</span>
           <h2 className="bh-benefits__title">Everything you receive as a host</h2>
           <p className="bh-benefits__subtitle">
-            We don't just give you a title — we provide you with an entire business-in-a-box 
+            We don't just give you a title — we provide you with an entire business-in-a-box
             loaded with resources, high-level support, and unparalleled exposure.
           </p>
         </div>
@@ -422,7 +399,7 @@ function GrowthSection() {
    SOCIAL PROOF — Photo strip
    ══════════════════════════════════════════════ */
 function SocialProofSection() {
-  const [ref, inView] = useInView(0.1);
+  const [ref] = useInView(0.1);
   const photos = [
     '/images/gallery/events1.webp',
     '/images/gallery/events3.webp',
@@ -443,20 +420,14 @@ function SocialProofSection() {
         </div>
       </div>
 
-      <div className="bh-proof__strip">
-        {photos.map((src, i) => (
-          <div
-            key={i}
-            className="bh-proof__img"
-            style={{
-              transitionDelay: inView ? `${i * 0.08}s` : '0s',
-              opacity: inView ? 1 : 0,
-              transform: inView ? 'scale(1)' : 'scale(0.92)',
-            }}
-          >
-            <img src={src} alt={`Titans event ${i + 1}`} loading="lazy" />
-          </div>
-        ))}
+      <div className="bh-proof__strip-wrapper">
+        <div className="bh-proof__strip">
+          {[...photos, ...photos].map((src, i) => (
+            <div key={i} className="bh-proof__img">
+              <img src={src} alt="Titans event" loading="lazy" />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -583,6 +554,7 @@ function ApplicationSection() {
    MAIN EXPORT
    ══════════════════════════════════════════════ */
 export default function BecomeHost() {
+  useScrollReveal('host-page');
   return (
     <>
       <HeroSection />

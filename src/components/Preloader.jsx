@@ -5,22 +5,33 @@ export default function Preloader() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mimic the window.onload logic
+    // `body.loading` locks scrolling behind the overlay (see index.css).
+    document.body.classList.add('loading');
+
+    let hideTimer;
     const handleLoad = () => {
-      setTimeout(() => {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
         setLoading(false);
         document.body.classList.remove('loading');
       }, 800);
     };
 
+    let fallbackTimer;
     if (document.readyState === 'complete') {
       handleLoad();
     } else {
       window.addEventListener('load', handleLoad);
-      // Fallback
-      setTimeout(handleLoad, 3000);
+      // Safety net in case the load event never fires.
+      fallbackTimer = setTimeout(handleLoad, 3000);
     }
-    return () => window.removeEventListener('load', handleLoad);
+
+    return () => {
+      window.removeEventListener('load', handleLoad);
+      clearTimeout(hideTimer);
+      clearTimeout(fallbackTimer);
+      document.body.classList.remove('loading');
+    };
   }, []);
 
   return (

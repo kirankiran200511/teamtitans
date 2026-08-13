@@ -1,78 +1,11 @@
-"use client";
-import { goTo } from '../../lib/router';
+import Link from 'next/link';
+import { SINGLE_TICKET, MEMBERSHIP_TIERS, CORPORATE } from '../../data/plans';
 
 /**
- * Plans mirror the reference site's membership table.
- * Note: the reference lists "2 site tours · Summer BBQ" inside Silver VIP even
- * though that tier already includes "4–6 site tours a year" and the BBQ; the
- * contradictory line is omitted here rather than reproduced.
+ * Home pricing section. Plan content lives in data/plans.js so this section and
+ * the /membership/<plan> pages can never drift apart. Every CTA here opens that
+ * plan's page rather than scrolling back to itself.
  */
-const SINGLE = {
-  kicker: 'Just trying out',
-  name: 'Single Event Ticket',
-  price: '39',
-  period: '/ ticket',
-  blurb: 'Come to one event, meet the room, and decide from there. No commitment.',
-  cta: 'Book your seat',
-  features: [
-    'One main event',
-    'Hot buffet included',
-    'Open networking',
-    'Coffee morning invite',
-    'Social events',
-  ],
-};
-
-const PLANS = [
-  {
-    id: 'lite',
-    name: 'Silver Lite',
-    price: '29.99',
-    period: '/ month',
-    blurb: 'For getting started.',
-    cta: 'Choose Starter',
-    features: [
-      '4 monthly events',
-      'All speaker videos (£900 value)',
-      '4 coffee mornings (£500 value)',
-      '2 site tours · Summer BBQ',
-      'WhatsApp community',
-    ],
-  },
-  {
-    id: 'vip',
-    name: 'Silver VIP',
-    price: '55.99',
-    period: '/ month',
-    blurb: 'Full access.',
-    cta: 'Choose Silver VIP',
-    popular: true,
-    features: [
-      'All 9 monthly events',
-      '9 coffee mornings with experts',
-      '30-min intro session with Manni',
-      '4–6 site tours a year',
-      'BBQ + Christmas party',
-      'WhatsApp community',
-      'Bring a guest at a discount',
-      'All speaker recordings',
-    ],
-  },
-  {
-    id: 'gold',
-    name: 'Gold',
-    price: '269',
-    period: '/ month',
-    blurb: 'Mentorship + everything.',
-    cta: 'Choose Gold',
-    features: [
-      'Everything in Silver VIP',
-      '4× 1:1 mentoring sessions',
-      'Custom plan for your goals',
-      '4 strategy sessions with Manni',
-    ],
-  },
-];
 
 const Check = () => (
   <svg className="plan__check" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -94,8 +27,6 @@ const Arrow = () => (
 );
 
 export default function Membership() {
-  const book = (e) => { e.preventDefault(); goTo('#membership'); };
-
   return (
     <section className="section pricing" id="membership">
       <div className="container">
@@ -110,11 +41,11 @@ export default function Membership() {
         {/* ── Featured: single ticket ─────────────────────── */}
         <div className="ticket reveal reveal-d1">
           <div className="ticket__stub">
-            <span className="ticket__kicker">{SINGLE.kicker}</span>
-            <h3 className="ticket__name">{SINGLE.name}</h3>
-            <p className="ticket__blurb">{SINGLE.blurb}</p>
+            <span className="ticket__kicker">{SINGLE_TICKET.kicker}</span>
+            <h3 className="ticket__name">{SINGLE_TICKET.name}</h3>
+            <p className="ticket__blurb">{SINGLE_TICKET.blurb}</p>
             <ul className="ticket__features">
-              {SINGLE.features.map((f) => <li key={f}><Check />{f}</li>)}
+              {SINGLE_TICKET.features.map((f) => <li key={f}><Check />{f}</li>)}
             </ul>
           </div>
 
@@ -123,13 +54,13 @@ export default function Membership() {
           <div className="ticket__buy">
             <div className="ticket__price">
               <span className="ticket__currency">£</span>
-              <span className="ticket__amount">{SINGLE.price}</span>
-              <span className="ticket__period">{SINGLE.period}</span>
+              <span className="ticket__amount">{SINGLE_TICKET.price}</span>
+              <span className="ticket__period">{SINGLE_TICKET.period}</span>
             </div>
-            <a className="btn-fill btn-fill--lg ticket__cta" href="#membership" onClick={book}>
-              {SINGLE.cta}
+            <Link className="btn-fill btn-fill--lg ticket__cta" href={`/membership/${SINGLE_TICKET.id}`}>
+              {SINGLE_TICKET.cta}
               <Arrow />
-            </a>
+            </Link>
             <span className="ticket__note">No commitment · Pay once</span>
           </div>
         </div>
@@ -140,7 +71,7 @@ export default function Membership() {
 
         {/* ── Membership tiers ────────────────────────────── */}
         <div className="pricing__grid">
-          {PLANS.map((p, i) => (
+          {MEMBERSHIP_TIERS.map((p, i) => (
             <div
               className={`plan ${p.popular ? 'plan--popular' : ''} reveal reveal--scale reveal-d${i + 1}`}
               key={p.id}
@@ -159,13 +90,12 @@ export default function Membership() {
                   <span className="plan__period">{p.period}</span>
                 </div>
 
-                <a
+                <Link
                   className={p.popular ? 'btn-fill plan__cta' : 'btn-outline-dark plan__cta'}
-                  href="#membership"
-                  onClick={book}
+                  href={`/membership/${p.id}`}
                 >
                   {p.cta}
-                </a>
+                </Link>
               </div>
 
               <ul className="plan__features">
@@ -180,17 +110,12 @@ export default function Membership() {
         <div className="pricing__corporate reveal">
           <div>
             <strong>Running a team?</strong>
-            <span>Corporate membership covers your whole crew &mdash; £997/yr.</span>
+            <span>Corporate membership covers your whole crew - £997/yr.</span>
           </div>
-          <a
-            className="btn-outline-dark btn-outline-dark--sm"
-            href="https://teamtitans.co.uk/contact"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            See corporate membership
+          <Link className="btn-outline-dark btn-outline-dark--sm" href={`/membership/${CORPORATE.id}`}>
+            {CORPORATE.cta}
             <Arrow />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

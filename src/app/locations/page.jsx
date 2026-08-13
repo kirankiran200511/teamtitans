@@ -1,6 +1,7 @@
 "use client";
 import { goTo } from '../../lib/router';
 import { LOCATIONS } from '../../data/locations';
+import useScrollReveal from '../../hooks/useScrollReveal';
 
 const PROMISE = [
   { title: 'Hot buffet, every ticket', desc: 'No upsells. A full hot buffet is included wherever you join us.' },
@@ -69,6 +70,8 @@ function LocationCard({ loc }) {
 }
 
 export default function Locations() {
+  useScrollReveal('locations');
+
   return (
     <>
       <section className="loc-hero">

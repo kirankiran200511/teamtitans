@@ -21,7 +21,7 @@ self.__SERVER_FILES_MANIFEST={
       "js"
     ],
     "instrumentationClientInject": [],
-    "poweredByHeader": true,
+    "poweredByHeader": false,
     "compress": true,
     "images": {
       "deviceSizes": [

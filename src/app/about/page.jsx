@@ -1,5 +1,6 @@
 "use client";
 import { goTo } from '../../lib/router';
+import useScrollReveal from '../../hooks/useScrollReveal';
 
 const VALUES = ['Collaboration', 'Commitment', 'Consistency', 'Integrity', 'Excellence'];
 
@@ -131,6 +132,7 @@ const initials = (name) => {
 };
 
 export default function About() {
+  useScrollReveal('about-page');
   return (
     <>
       <section className="page-hero">

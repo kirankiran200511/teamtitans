@@ -64,12 +64,12 @@ export default function MeetTheHost() {
 
             <p className="host__text">
               Originally from Mumbai, Manni Chopra has become one of the UK&rsquo;s leading voices
-              in property over the past 14+ years — driven by passion, purpose, and a commitment to
+              in property over the past 14+ years - driven by passion, purpose, and a commitment to
               empowering others through knowledge and connection.
             </p>
             <p className="host__text">
               Alongside co-founder <strong>Romey Chopra</strong>, she runs Chopra
-              Property Group — over 25 years of combined experience finding undervalued
+              Property Group - over 25 years of combined experience finding undervalued
               opportunities and bringing them back to life through refurbishments, conversions and
               developments. Titans is where that experience gets shared.
             </p>

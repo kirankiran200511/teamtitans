@@ -3,12 +3,10 @@ import { useState, useEffect, useRef } from 'react';
 import { goTo } from '../../lib/router';
 
 /**
- * Composite backdrop (networking room + London skyline).
- * Falls back to the plain room shot — and to the drawn skyline below it —
- * until /images/hero-bg.jpg is dropped in.
+ * Backdrop for the hero. The room shot carries no skyline of its own, so the
+ * drawn one always sits beneath it.
  */
-const HERO_IMAGE = '/images/hero-bg.jpg';
-const HERO_FALLBACK = '/images/hero-room.webp';
+const HERO_IMAGE = '/images/hero-room.webp';
 
 const STATS = [
   {
@@ -139,45 +137,39 @@ function LondonSkyline() {
 }
 
 export default function Hero() {
-  const [src, setSrc] = useState(HERO_IMAGE);
   const [photo, setPhoto] = useState('pending');
   const [counting, setCounting] = useState(false);
   const stripRef = useRef(null);
 
-  // Composite backdrop already contains the skyline; the drawn one is a stand-in.
-  const usingFallback = src === HERO_FALLBACK || photo === 'missing';
-
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setCounting(true);
-        window.removeEventListener('scroll', handleScroll);
-      }
-    };
-    
-    if (window.scrollY > 50) {
-      setCounting(true);
-    } else {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-    }
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+    if (!stripRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setCounting(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(stripRef.current);
+
+    return () => observer.disconnect();
   }, []);
 
   return (
     <section className="hero" id="home">
-      <div className={`hero__bg ${photo === 'ready' ? 'has-photo' : ''} ${usingFallback ? 'is-fallback' : ''}`}>
+      <div className={`hero__bg ${photo === 'ready' ? 'has-photo' : ''} is-fallback`}>
         {photo !== 'missing' && (
           <img
             className="hero__photo"
-            src={src}
+            src={HERO_IMAGE}
             alt=""
             aria-hidden="true"
             onLoad={() => setPhoto('ready')}
-            onError={() => {
-              if (src === HERO_IMAGE) setSrc(HERO_FALLBACK);
-              else setPhoto('missing');
-            }}
+            onError={() => setPhoto('missing')}
           />
         )}
         <div className="hero__scrim" />
@@ -204,7 +196,7 @@ export default function Hero() {
         <p className="hero__kicker"><span>For Serious Dealmakers</span></p>
 
         <p className="hero__sub">
-          120+ investors, developers and property professionals in one room &mdash;
+          120+ investors, developers and property professionals in one room -
           with expert speakers, hot buffet, and connections that turn into <em>real deals.</em>
         </p>
 
@@ -225,7 +217,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {usingFallback && <LondonSkyline />}
+      <LondonSkyline />
 
       <div className="hero__stats" ref={stripRef}>
         <div className="hero__stats-inner">

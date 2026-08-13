@@ -1,6 +1,8 @@
 "use client";
+import { use } from 'react';
 import { goTo } from '../../../lib/router';
 import { getLocation, LOCATIONS, HOST, AGENDA } from '../../../data/locations';
+import useScrollReveal from '../../../hooks/useScrollReveal';
 
 const GALLERY = [
   '/images/gallery/events2.webp',
@@ -68,8 +70,11 @@ function Map({ venue, name }) {
   );
 }
 
-export default function LocationDetail({ slug }) {
+export default function LocationDetail({ params }) {
+  // `params` is a promise in Next 16 — unwrap it before reading the slug.
+  const { slug } = use(params);
   const loc = getLocation(slug);
+  useScrollReveal(`location-${slug}`);
 
   if (!loc) {
     return (

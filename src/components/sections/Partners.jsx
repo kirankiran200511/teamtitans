@@ -1,13 +1,13 @@
 "use client";
 export default function Partners() {
   const logos = [
-    { src: '/images/partners/logo1.png', alt: 'STM Consultancy' },
+    { src: '/images/partners/logo1.png', alt: 'STM Consultancy', href: 'https://www.stm-consult.com/' },
     { src: '/images/partners/logo2.png', alt: 'Insurance Desk' },
-    { src: '/images/partners/logo3.png', alt: 'Oasis Accountants' },
-    { src: '/images/partners/logo4.png', alt: 'All Counties Property Group' },
-    { src: '/images/partners/logo5.png', alt: 'Property Investor News' },
-    { src: '/images/partners/logo6.png', alt: 'iNHABIT Architects & Designers' },
-    { src: '/images/partners/logo7.png', alt: 'HGC Finance' },
+    { src: '/images/partners/logo3.png', alt: 'Oasis Accountants', href: 'https://oasisaccountants.co.uk/' },
+    { src: '/images/partners/logo4.png', alt: 'All Counties Property Group', href: 'https://www.allcountiesproperty.co.uk/' },
+    { src: '/images/partners/logo5.png', alt: 'Property Investor News', href: 'https://property-investor-news.com/' },
+    { src: '/images/partners/logo6.png', alt: 'iNHABIT Architects & Designers', href: 'https://inhabitat-architects.co.uk/' },
+    { src: '/images/partners/logo7.png', alt: 'HGC Finance / Our Mortgage Broker', href: 'https://www.ourmortgagebroker.co.uk/' },
   ];
 
   return (
@@ -16,7 +16,7 @@ export default function Partners() {
         <div className="text-center reveal">
           <span className="section-label">Trusted Partners</span>
           <h2 className="section-title">Our partners help members grow</h2>
-          <p className="section-subtitle mx-auto">Each partner is selected to provide genuine value — from finance to legal to development support.</p>
+          <p className="section-subtitle mx-auto">Each partner is selected to provide genuine value - from finance to legal to development support.</p>
         </div>
         
         <div className="reveal reveal-d1" style={{
@@ -34,7 +34,13 @@ export default function Partners() {
               display: 'flex',
               justifyContent: 'center',
             }}>
-              <img src={logo.src} alt={logo.alt} style={{ maxWidth: '100%', maxHeight: '75px', objectFit: 'contain' }} />
+              {logo.href ? (
+                <a href={logo.href} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${logo.alt}'s website`} style={{ display: 'inline-flex', transition: 'opacity 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'} onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}>
+                  <img src={logo.src} alt={logo.alt} style={{ maxWidth: '100%', maxHeight: '75px', objectFit: 'contain' }} />
+                </a>
+              ) : (
+                <img src={logo.src} alt={logo.alt} style={{ maxWidth: '100%', maxHeight: '75px', objectFit: 'contain' }} />
+              )}
             </div>
           ))}
         </div>
