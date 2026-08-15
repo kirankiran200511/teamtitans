@@ -22,11 +22,11 @@ const PILLARS = [
   },
   {
     title: 'Practical education',
-    desc: 'Every session is built around implementation. Leave with an action plan, not just notes.',
+    desc: 'Every session goes beyond theory, with live deals, real numbers, case studies and the property insights you won’t find in a textbook. Leave with knowledge you can put into action.',
   },
   {
     title: 'Real insights',
-    desc: 'Live deals, live numbers, live lessons from people actively building portfolios.',
+    desc: 'Go beyond market headlines. Hear first-hand insights, lessons and strategies from those actively making property moves today.',
   },
 ];
 
@@ -74,7 +74,7 @@ export default function Speakers() {
             href="#membership"
             onClick={(e) => { e.preventDefault(); goTo('#membership'); }}
           >
-            Book your seats
+            Book your Tickets
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M3.5 9h11M10 4.5 14.5 9 10 13.5" />
             </svg>

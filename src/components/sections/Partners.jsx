@@ -15,7 +15,7 @@ export default function Partners() {
       <div className="container">
         <div className="text-center reveal">
           <span className="section-label">Trusted Partners</span>
-          <h2 className="section-title">Our partners help members grow</h2>
+          <h2 className="section-title">Partners Behind Your Property Growth</h2>
           <p className="section-subtitle mx-auto">Each partner is selected to provide genuine value - from finance to legal to development support.</p>
         </div>
         

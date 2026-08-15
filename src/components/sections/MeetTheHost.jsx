@@ -34,7 +34,7 @@ export default function MeetTheHost() {
           <span className="section-label">Meet the host</span>
           <h2 className="section-title">The founder behind Titans</h2>
           <p className="section-subtitle mx-auto">
-            Titans exists because one developer got tired of watching good people build in isolation.
+            Manni founded Titans with a simple mission: to inspire one million people to use property to create greater income, freedom and choice.
           </p>
         </div>
 
@@ -75,8 +75,7 @@ export default function MeetTheHost() {
             </p>
 
             <blockquote className="host__quote">
-              Titans isn&rsquo;t just an event; it&rsquo;s a movement fuelled by the shared desire
-              to learn, grow, and achieve more through collaboration.
+              Titans isn&rsquo;t just an event, it exists to help people use property to create income, independence and greater choice - bringing together the knowledge, relationships and opportunities to make it possible
             </blockquote>
 
             <div className="host__actions">

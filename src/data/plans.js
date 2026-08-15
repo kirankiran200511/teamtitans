@@ -36,11 +36,12 @@ export const PLANS = [
     promise: 'One evening to find out whether this room is worth your time.',
     // Home-card feature list — kept short on purpose.
     features: [
-      'One main event',
-      'Hot buffet included',
-      'Open networking',
-      'Coffee morning invite',
-      'Social events',
+      'Access to 120+ Property Professionals',
+      '3+ Industry Expert Speakers',
+      'Live Q&A & Expert Insights',
+      'Buffet Dinner & Refreshments Included',
+      'Connect with Investors, Developers, Landlords & Business Owners',
+      'A Room of Ambitious Property Entrepreneurs',
     ],
     // Plan page: the same inclusions, with the detail people actually ask about.
     stack: [

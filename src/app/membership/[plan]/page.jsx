@@ -37,9 +37,17 @@ const Lock = () => (
   </svg>
 );
 
-/* ───────────────────── countdown (hydration-safe) ─────────────────────
-   Renders nothing on the server and on the first client paint, so the
-   server HTML and the hydrated tree always agree. */
+/** Machine-printed label/value pair, as on a real ticket. */
+const Field = ({ label, children }) => (
+  <div className="tkt__field">
+    <span className="tkt__field-label">{label}</span>
+    <strong className="tkt__field-value">{children}</strong>
+  </div>
+);
+
+const Barcode = () => <span className="tkt__barcode" aria-hidden="true" />;
+
+/* Countdown stays client-only so server and client markup always agree. */
 function useDaysUntil(iso) {
   const [days, setDays] = useState(null);
   useEffect(() => {
@@ -49,59 +57,123 @@ function useDaysUntil(iso) {
   return days;
 }
 
-/* ───────────────────────── order summary ───────────────────────── */
+/* ─────────────────────── the ticket (hero) ─────────────────────── */
 
-function OrderSummary({ plan, qty, onReserve }) {
-  const total = plan.quantity ? (Number(plan.price) * qty).toFixed(2) : plan.price;
-
+function TicketHero({ plan, days, onClaim }) {
   return (
-    <aside className="pl-summary" aria-label="Order summary">
-      <div className="pl-summary__card">
-        {plan.popular && (
-          <span className="pl-summary__flag"><Star /> Most popular</span>
-        )}
-
-        <p className="pl-summary__name">{plan.name}</p>
-
-        <div className="pl-summary__price">
-          <span className="pl-summary__currency">£</span>
-          <span className="pl-summary__amount">{total}</span>
-          <span className="pl-summary__period">{plan.period}</span>
+    <div className="tkt">
+      {/* Stub — the part you keep */}
+      <div className="tkt__stub">
+        <div className="tkt__brand">
+          <img src="/images/logo.png" alt="" aria-hidden="true" />
         </div>
 
-        {plan.quantity && qty > 1 && (
-          <p className="pl-summary__math">{qty} × £{plan.price} per ticket</p>
+        <span className="tkt__admit">
+          {plan.team ? 'Team pass' : 'Admit one'}
+        </span>
+
+        <h1 className="tkt__name">{plan.name}</h1>
+        <p className="tkt__promise">{plan.promise}</p>
+
+        {plan.popular && (
+          <span className="tkt__flag"><Star /> Most popular</span>
         )}
 
-        <p className="pl-summary__billing">{plan.billing}</p>
-
-        <ul className="pl-summary__list">
+        <ul className="tkt__includes">
           {plan.stack.slice(0, 4).map((item) => (
             <li key={item.label}><Check className="pl-check pl-check--sm" />{item.label}</li>
           ))}
           {plan.stack.length > 4 && (
-            <li className="pl-summary__more">+ {plan.stack.length - 4} more included</li>
+            <li className="tkt__includes-more">+ {plan.stack.length - 4} more on this ticket</li>
           )}
         </ul>
 
-        <button type="button" className="btn-fill btn-fill--lg pl-summary__cta" onClick={onReserve}>
+        <Barcode />
+        <span className="tkt__serial">TITANS · {plan.id.toUpperCase()} · {NEXT_EVENT.date.replace(/\D/g, '').slice(0, 8)}</span>
+      </div>
+
+      {/* Perforation */}
+      <div className="tkt__perf" aria-hidden="true" />
+
+      {/* Counterfoil — the part you hand over */}
+      <div className="tkt__buy">
+        <div className="tkt__price">
+          <span className="tkt__currency">£</span>
+          <span className="tkt__amount">{plan.price}</span>
+          <span className="tkt__period">{plan.period}</span>
+        </div>
+        <p className="tkt__billing">{plan.billing}</p>
+
+        <div className="tkt__fields">
+          <Field label="Venue">Crowne Plaza</Field>
+          <Field label="Doors">5:30 PM</Field>
+          <Field label="Next date">{NEXT_EVENT.date.replace('Thursday ', 'Thu ').replace('September', 'Sep')}</Field>
+          <Field label="Valid for">
+            {plan.period === '/ ticket' ? 'One event' : plan.period === '/ year' ? '12 months' : 'Rolling monthly'}
+          </Field>
+        </div>
+
+        <button type="button" className="btn-fill btn-fill--lg tkt__cta" onClick={onClaim}>
           {plan.ctaLong}
           <Arrow />
         </button>
 
-        <p className="pl-summary__reassure">
+        <p className="tkt__note">
           <Lock />
-          {plan.enquiryOnly
-            ? 'No payment taken — we confirm the details first'
-            : 'No card details on this page · Cancel anytime'}
+          {plan.enquiryOnly ? 'No payment taken — we confirm details first' : 'No card details on this page'}
         </p>
+
+        {days !== null && days > 0 && (
+          <p className="tkt__countdown">{days} days to the next event · seats are limited</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ───────────────────── sticky stub (order summary) ───────────────────── */
+
+function StubSummary({ plan, qty, onClaim }) {
+  const total = plan.quantity ? (Number(plan.price) * qty).toFixed(2) : plan.price;
+
+  return (
+    <aside className="stub" aria-label="Order summary">
+      <div className="stub__top">
+        <span className="stub__label">Your ticket</span>
+        <span className="stub__plan">{plan.name}</span>
       </div>
 
-      <div className="pl-summary__event">
-        <span className="pl-summary__event-label">Next event</span>
-        <strong>{NEXT_EVENT.date}</strong>
-        <span>{NEXT_EVENT.venue}</span>
-        <span>{NEXT_EVENT.doors}</span>
+      <div className="stub__perf" aria-hidden="true" />
+
+      <div className="stub__body">
+        <div className="stub__price">
+          <span className="stub__currency">£</span>
+          <span className="stub__amount">{total}</span>
+          <span className="stub__period">{plan.period}</span>
+        </div>
+        {plan.quantity && qty > 1 && (
+          <p className="stub__math">{qty} × £{plan.price} per ticket</p>
+        )}
+        <p className="stub__billing">{plan.billing}</p>
+
+        <ul className="stub__list">
+          {plan.stack.slice(0, 4).map((item) => (
+            <li key={item.label}><Check className="pl-check pl-check--sm" />{item.label}</li>
+          ))}
+          {plan.stack.length > 4 && (
+            <li className="stub__more">+ {plan.stack.length - 4} more included</li>
+          )}
+        </ul>
+
+        <button type="button" className="btn-fill stub__cta" onClick={onClaim}>
+          {plan.ctaLong}
+          <Arrow />
+        </button>
+
+        <p className="stub__next">
+          Next event <strong>{NEXT_EVENT.date.replace(' 2026', '')}</strong>
+        </p>
+        <Barcode />
       </div>
     </aside>
   );
@@ -124,9 +196,7 @@ function Comparison({ current }) {
         <caption className="sr-only">Comparison of Titans membership plans</caption>
         <thead>
           <tr>
-            <th scope="col">
-              <span className="sr-only">Feature</span>
-            </th>
+            <th scope="col"><span className="sr-only">Feature</span></th>
             {columns.map((p) => (
               <th
                 key={p.id}
@@ -137,7 +207,7 @@ function Comparison({ current }) {
                 <span className="pl-table__plan">{p.name}</span>
                 <span className="pl-table__price">£{p.price}<i>{p.period}</i></span>
                 {p.id === current
-                  ? <span className="pl-table__you">You’re viewing</span>
+                  ? <span className="pl-table__you">Your ticket</span>
                   : <Link className="pl-table__switch" href={`/membership/${p.id}`}>View</Link>}
               </th>
             ))}
@@ -160,12 +230,10 @@ function Comparison({ current }) {
   );
 }
 
-/* ───────────────────────── reserve form ─────────────────────────
-   Four fields at most (Baymard: every extra field is a drop-off), no
-   account, required and optional both marked explicitly. */
+/* ───────────────────────── reserve form ───────────────────────── */
 
 function ReserveForm({ plan, qty, setQty, formRef }) {
-  const [status, setStatus] = useState('idle'); // idle | sending | done | error
+  const [status, setStatus] = useState('idle');
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({ name: '', email: '', phone: '' });
 
@@ -200,8 +268,7 @@ function ReserveForm({ plan, qty, setQty, formRef }) {
       });
       if (!res.ok) throw new Error('Request failed');
 
-      // Payment hook: once plan.checkoutUrl is set, the lead is captured above
-      // and the visitor is handed straight to the payment provider.
+      // Payment hook: lead is captured above, then hand off to the provider.
       if (plan.checkoutUrl) {
         const url = new URL(plan.checkoutUrl);
         url.searchParams.set('prefilled_email', values.email.trim());
@@ -217,84 +284,100 @@ function ReserveForm({ plan, qty, setQty, formRef }) {
 
   if (status === 'done') {
     return (
-      <div className="pl-form__done" role="status">
-        <span className="pl-form__done-icon" aria-hidden="true">✅</span>
-        <h3>You’re on the list for {plan.name}</h3>
-        <p>
-          The Titans team will email <strong>{values.email.trim()}</strong> to confirm your place
-          {plan.enquiryOnly ? ' and arrange a quick call.' : ' and send payment details.'}
-        </p>
-        <p className="pl-form__done-next">
-          Next event: <strong>{NEXT_EVENT.date}</strong> — {NEXT_EVENT.venue}
-        </p>
-        <Link className="btn-outline-dark" href="/">Back to homepage</Link>
+      <div className="claim claim--done" role="status">
+        <div className="claim__head">
+          <span className="claim__label">Confirmed</span>
+          <Barcode />
+        </div>
+        <div className="claim__perf" aria-hidden="true" />
+        <div className="claim__body">
+          <span className="claim__tick" aria-hidden="true">✓</span>
+          <h3>You’re on the list for {plan.name}</h3>
+          <p>
+            The Titans team will email <strong>{values.email.trim()}</strong> to confirm your place
+            {plan.enquiryOnly ? ' and arrange a quick call.' : ' and send payment details.'}
+          </p>
+          <p className="claim__next">
+            <Field label="Next date">{NEXT_EVENT.date}</Field>
+            <Field label="Venue">{NEXT_EVENT.venue}</Field>
+          </p>
+          <Link className="btn-outline-dark" href="/">Back to homepage</Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <form className="pl-form" onSubmit={submit} ref={formRef} noValidate>
-      <h3 className="pl-form__title">
-        {plan.enquiryOnly ? 'Talk to us about corporate membership' : `Reserve your ${plan.name}`}
-      </h3>
-      <p className="pl-form__sub">
-        Takes about 20 seconds. No account to create{plan.enquiryOnly ? '' : ', no card details on this page'}.
-      </p>
-
-      {plan.quantity && (
-        <div className="pl-form__field">
-          <label htmlFor="qty">How many tickets? <span className="pl-form__req">Required</span></label>
-          <div className="pl-qty">
-            <button type="button" onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="One ticket fewer">−</button>
-            <output id="qty" aria-live="polite">{qty}</output>
-            <button type="button" onClick={() => setQty((q) => Math.min(10, q + 1))} aria-label="One more ticket">+</button>
-          </div>
-        </div>
-      )}
-
-      <div className="pl-form__field">
-        <label htmlFor="name">Full name <span className="pl-form__req">Required</span></label>
-        <input
-          id="name" name="name" type="text" autoComplete="name" value={values.name} onChange={set('name')}
-          aria-invalid={!!errors.name} aria-describedby={errors.name ? 'name-err' : undefined}
-        />
-        {errors.name && <p className="pl-form__err" id="name-err">{errors.name}</p>}
+    <div className="claim">
+      <div className="claim__head">
+        <span className="claim__label">{plan.enquiryOnly ? 'Team enquiry' : 'Claim your seat'}</span>
+        <Barcode />
       </div>
+      <div className="claim__perf" aria-hidden="true" />
 
-      <div className="pl-form__field">
-        <label htmlFor="email">Email <span className="pl-form__req">Required</span></label>
-        <input
-          id="email" name="email" type="email" inputMode="email" autoComplete="email"
-          value={values.email} onChange={set('email')}
-          aria-invalid={!!errors.email} aria-describedby={errors.email ? 'email-err' : undefined}
-        />
-        {errors.email && <p className="pl-form__err" id="email-err">{errors.email}</p>}
-      </div>
-
-      <div className="pl-form__field">
-        <label htmlFor="phone">Phone <span className="pl-form__opt">Optional</span></label>
-        <input
-          id="phone" name="phone" type="tel" inputMode="tel" autoComplete="tel"
-          value={values.phone} onChange={set('phone')}
-          placeholder="Only if you’d rather we call"
-        />
-      </div>
-
-      {status === 'error' && (
-        <p className="pl-form__err pl-form__err--form" role="alert">
-          Something went wrong sending that. Email <a href="mailto:info@teamtitans.co.uk">info@teamtitans.co.uk</a> and the team will sort it.
+      <form className="claim__body" onSubmit={submit} ref={formRef} noValidate>
+        <h3 className="claim__title">
+          {plan.enquiryOnly ? 'Talk to us about corporate membership' : `Reserve your ${plan.name}`}
+        </h3>
+        <p className="claim__sub">
+          About 20 seconds. No account to create{plan.enquiryOnly ? '' : ', no card details on this page'}.
         </p>
-      )}
 
-      <button type="submit" className="btn-fill btn-fill--lg pl-form__submit" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Sending…' : plan.ctaLong}
-        {status !== 'sending' && <Arrow />}
-      </button>
+        {plan.quantity && (
+          <div className="claim__field">
+            <label htmlFor="qty">How many tickets? <span className="claim__req">Required</span></label>
+            <div className="pl-qty">
+              <button type="button" onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="One ticket fewer">−</button>
+              <output id="qty" aria-live="polite">{qty}</output>
+              <button type="button" onClick={() => setQty((q) => Math.min(10, q + 1))} aria-label="One more ticket">+</button>
+            </div>
+          </div>
+        )}
 
-      <p className="pl-form__note">
-        <Lock /> Your details go to the Titans team only, for this booking. Nothing is charged here.
-      </p>
-    </form>
+        <div className="claim__field">
+          <label htmlFor="name">Full name <span className="claim__req">Required</span></label>
+          <input
+            id="name" name="name" type="text" autoComplete="name" value={values.name} onChange={set('name')}
+            aria-invalid={!!errors.name} aria-describedby={errors.name ? 'name-err' : undefined}
+          />
+          {errors.name && <p className="claim__err" id="name-err">{errors.name}</p>}
+        </div>
+
+        <div className="claim__field">
+          <label htmlFor="email">Email <span className="claim__req">Required</span></label>
+          <input
+            id="email" name="email" type="email" inputMode="email" autoComplete="email"
+            value={values.email} onChange={set('email')}
+            aria-invalid={!!errors.email} aria-describedby={errors.email ? 'email-err' : undefined}
+          />
+          {errors.email && <p className="claim__err" id="email-err">{errors.email}</p>}
+        </div>
+
+        <div className="claim__field">
+          <label htmlFor="phone">Phone <span className="claim__opt">Optional</span></label>
+          <input
+            id="phone" name="phone" type="tel" inputMode="tel" autoComplete="tel"
+            value={values.phone} onChange={set('phone')}
+            placeholder="Only if you’d rather we call"
+          />
+        </div>
+
+        {status === 'error' && (
+          <p className="claim__err claim__err--form" role="alert">
+            Something went wrong sending that. Email <a href="mailto:info@teamtitans.co.uk">info@teamtitans.co.uk</a> and the team will sort it.
+          </p>
+        )}
+
+        <button type="submit" className="btn-fill btn-fill--lg claim__submit" disabled={status === 'sending'}>
+          {status === 'sending' ? 'Sending…' : plan.ctaLong}
+          {status !== 'sending' && <Arrow />}
+        </button>
+
+        <p className="claim__note">
+          <Lock /> Your details go to the Titans team only, for this booking.
+        </p>
+      </form>
+    </div>
   );
 }
 
@@ -317,7 +400,6 @@ export default function PlanPage({ params }) {
     formRef.current?.querySelector('input')?.focus({ preventScroll: true });
   }, []);
 
-  // Mobile sticky bar: only once the hero CTA has scrolled away.
   useEffect(() => {
     let ticking = false;
     const onScroll = () => {
@@ -351,9 +433,13 @@ export default function PlanPage({ params }) {
 
   return (
     <>
-      {/* ── Hero: name, price, one CTA ─────────────────────────── */}
+      {/* ── The ticket ─────────────────────────────────────────── */}
       <section className="pl-hero">
-        <div className="pl-hero__bg" aria-hidden="true" />
+        <div className="pl-hero__bg" aria-hidden="true">
+          <img src="/images/gallery/events1.webp" alt="" />
+          <span className="pl-hero__scrim" />
+        </div>
+
         <div className="container pl-hero__inner">
           <nav className="pl-crumb" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
@@ -363,68 +449,35 @@ export default function PlanPage({ params }) {
             <span aria-current="page">{plan.name}</span>
           </nav>
 
-          <div className="pl-hero__grid">
-            <div className="pl-hero__body">
-              <span className={`pl-badge ${plan.popular ? 'pl-badge--hot' : ''}`}>
-                {plan.popular && <Star />} {plan.badge}
-              </span>
+          <TicketHero plan={plan} days={days} onClaim={scrollToForm} />
 
-              <h1 className="pl-hero__title">{plan.name}</h1>
-              <p className="pl-hero__promise">{plan.promise}</p>
-
-              <div className="pl-hero__price">
-                <span className="pl-hero__currency">£</span>
-                <span className="pl-hero__amount">{plan.price}</span>
-                <span className="pl-hero__period">{plan.period}</span>
-              </div>
-              <p className="pl-hero__billing">{plan.billing}</p>
-
-              <div className="pl-hero__ctas">
-                <button type="button" className="btn-fill btn-fill--lg" onClick={scrollToForm}>
-                  {plan.ctaLong}
-                  <Arrow />
-                </button>
-                <a className="btn-ghost btn-ghost--lg" href="#pl-compare">Compare plans</a>
-              </div>
-
-              <ul className="pl-trust">
-                <li><Star /> 4.9 from 10K+ attendees</li>
-                <li>120+ in the room each event</li>
-                <li>{plan.enquiryOnly ? 'Invoiced annually' : 'Cancel anytime'}</li>
-              </ul>
-            </div>
-
-            <div className="pl-hero__event">
-              <span className="pl-hero__event-label">Next event</span>
-              <strong>{NEXT_EVENT.date}</strong>
-              <span>{NEXT_EVENT.venue}</span>
-              <span>{NEXT_EVENT.doors}</span>
-              {days !== null && days > 0 && (
-                <span className="pl-hero__countdown">{days} days away · seats are limited</span>
-              )}
-            </div>
-          </div>
+          <ul className="pl-trust">
+            <li><Star /> 4.9 from 10K+ attendees</li>
+            <li>120+ in the room each event</li>
+            <li>{plan.enquiryOnly ? 'Invoiced annually' : 'Cancel anytime'}</li>
+          </ul>
         </div>
       </section>
 
-      {/* ── Body: content + sticky summary ─────────────────────── */}
+      {/* ── Body ───────────────────────────────────────────────── */}
       <section className="section pl-main">
         <div className="container pl-layout">
           <div className="pl-content">
 
-            {/* What you get */}
+            {/* What the ticket admits you to */}
             <div className="pl-block reveal">
-              <span className="section-label">What you get</span>
-              <h2 className="pl-h2">Everything included in {plan.name}</h2>
+              <span className="section-label">On this ticket</span>
+              <h2 className="pl-h2">What {plan.name} admits you to</h2>
               <ul className="pl-stack">
-                {plan.stack.map((item) => (
+                {plan.stack.map((item, i) => (
                   <li key={item.label}>
-                    <Check />
+                    <span className="pl-stack__no">{String(i + 1).padStart(2, '0')}</span>
                     <div>
                       <strong>{item.label}</strong>
                       {item.value && <span className="pl-stack__value">{item.value} value</span>}
                       <p>{item.detail}</p>
                     </div>
+                    <Check className="pl-check pl-stack__tick" />
                   </li>
                 ))}
               </ul>
@@ -435,26 +488,7 @@ export default function PlanPage({ params }) {
                   <strong> £{(Number(plan.price) * 12).toFixed(2)}</strong> a year.
                 </p>
               )}
-            </div>
 
-            {/* Qualification — who it is and isn't for */}
-            <div className="pl-block reveal">
-              <span className="section-label">Right fit?</span>
-              <h2 className="pl-h2">Who {plan.name} is for</h2>
-              <div className="pl-fit">
-                <div className="pl-fit__col pl-fit__col--yes">
-                  <h3>This is you if…</h3>
-                  <ul>
-                    {plan.forWho.map((f) => <li key={f}><Check className="pl-check pl-check--sm" />{f}</li>)}
-                  </ul>
-                </div>
-                <div className="pl-fit__col pl-fit__col--no">
-                  <h3>Pick something else if…</h3>
-                  <ul>
-                    {plan.notForWho.map((f) => <li key={f}><span aria-hidden="true">—</span>{f}</li>)}
-                  </ul>
-                </div>
-              </div>
               {upgrade && (
                 <p className="pl-nudge">
                   Coming to more than {plan.id === 'single' ? 'two events' : 'four events'} a year?
@@ -490,7 +524,7 @@ export default function PlanPage({ params }) {
               </ol>
             </div>
 
-            {/* Proof */}
+            {/* The room */}
             <div className="pl-block reveal">
               <span className="section-label">The room</span>
               <h2 className="pl-h2">What you’re walking into</h2>
@@ -499,7 +533,7 @@ export default function PlanPage({ params }) {
                   <div><strong>10,000+</strong><span>attendees to date</span></div>
                   <div><strong>120+</strong><span>in the room each event</span></div>
                   <div><strong>£9M+</strong><span>in deals connected</span></div>
-                  <div><strong>50+</strong><span>expert speakers</span></div>
+                  <div><strong>250+</strong><span>expert speakers</span></div>
                 </div>
                 <div className="pl-proof__shots">
                   {['events1', 'events5', 'events9', 'coffee1'].map((img) => (
@@ -509,8 +543,8 @@ export default function PlanPage({ params }) {
               </div>
             </div>
 
-            {/* Comparison */}
-            <div className="pl-block reveal" id="pl-compare">
+            {/* Compare — never gated behind a reveal animation */}
+            <div className="pl-block" id="pl-compare">
               <span className="section-label">Compare</span>
               <h2 className="pl-h2">How {plan.name} compares</h2>
               <p className="pl-block__sub">Only the lines that actually differ between plans.</p>
@@ -546,12 +580,12 @@ export default function PlanPage({ params }) {
             </div>
 
             {/* The ask */}
-            <div className="pl-block reveal" id="reserve">
+            <div className="pl-block" id="reserve">
               <ReserveForm plan={plan} qty={qty} setQty={setQty} formRef={formRef} />
             </div>
           </div>
 
-          <OrderSummary plan={plan} qty={qty} onReserve={scrollToForm} />
+          <StubSummary plan={plan} qty={qty} onClaim={scrollToForm} />
         </div>
       </section>
 

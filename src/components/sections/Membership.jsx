@@ -31,10 +31,9 @@ export default function Membership() {
     <section className="section pricing" id="membership">
       <div className="container">
         <div className="text-center reveal">
-          <span className="section-label">Membership</span>
           <h2 className="section-title">Choose how you join Titans</h2>
           <p className="section-subtitle mx-auto">
-            Come once, or become part of the room. Cancel anytime on monthly plans.
+            Come once, or become part of the room.
           </p>
         </div>
 

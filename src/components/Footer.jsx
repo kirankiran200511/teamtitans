@@ -71,7 +71,7 @@ export default function Footer() {
         </div>
 
         <p className="footer__copy">
-          &copy; {new Date().getFullYear()} Titans. All rights reserved. Property networking events, UK.
+          &copy; 2026 Titans. All rights reserved. Property networking events, UK.
         </p>
       </div>
     </footer>

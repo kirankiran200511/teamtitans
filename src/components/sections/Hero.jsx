@@ -33,7 +33,7 @@ const STATS = [
     ),
   },
   {
-    value: 50,
+    value: 250,
     label: 'Expert Speakers',
     format: (n) => `${Math.round(n)}+`,
     icon: (
@@ -196,8 +196,7 @@ export default function Hero() {
         <p className="hero__kicker"><span>For Serious Dealmakers</span></p>
 
         <p className="hero__sub">
-          120+ investors, developers and property professionals in one room -
-          with expert speakers, hot buffet, and connections that turn into <em>real deals.</em>
+          120+ serious property entrepreneurs, investors and developers connecting, learning and creating opportunities to scale.
         </p>
 
         <div className="hero__ctas">
