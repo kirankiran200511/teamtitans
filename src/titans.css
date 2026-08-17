@@ -2784,12 +2784,69 @@
 }
 
 .billing-toggle__badge {
-  background: var(--gold-light);
-  color: var(--navy);
+  background: var(--gold);
+  color: var(--white);
+  padding: 4px 10px;
+  border-radius: 20px;
   font-size: 0.7rem;
-  padding: 2px 8px;
-  border-radius: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  margin-left: 4px;
+}
+
+/* ── Comparison Table ─────────────────────────────────── */
+.pricing__compare-table-wrapper {
+  margin-top: 40px;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #EAE3DB;
+  box-shadow: 0 2px 14px rgba(35, 12, 6, 0.04);
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #EAE3DB;
+}
+
+.comparison-table th {
+  font-weight: 700;
+  color: var(--g800);
+  background: #faf8f5;
+  white-space: nowrap;
+}
+
+.comparison-table__feature {
+  font-weight: 600;
+  color: var(--g800);
+  border-right: 1px solid #EAE3DB;
+  position: sticky;
+  left: 0;
+  background: #fff;
+}
+
+.comparison-table th.comparison-table__feature {
+  background: #faf8f5;
+}
+
+.comparison-table__tier {
+  text-align: center;
+}
+
+.comparison-table__tier .plan__check {
+  color: var(--gold);
+  margin: 0 auto;
+}
+
+.comparison-table tbody tr:last-child td {
+  border-bottom: none;
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { SINGLE_TICKET, MEMBERSHIP_TIERS, CORPORATE } from '../../data/plans';
+import { SINGLE_TICKET, MEMBERSHIP_TIERS, CORPORATE, COMPARISON, COMPARISON_PLANS } from '../../data/plans';
 import { LOCATIONS } from '../../data/locations';
 
 /**
@@ -31,6 +31,7 @@ const Arrow = () => (
 export default function Membership() {
   const [selectedLocation, setSelectedLocation] = useState(LOCATIONS[0].slug);
   const [billingCycle, setBillingCycle] = useState('monthly');
+  const [showComparison, setShowComparison] = useState(false);
 
   const currentLocation = LOCATIONS.find(loc => loc.slug === selectedLocation);
   const ticketName = `${SINGLE_TICKET.name} - ${currentLocation?.name || ''}`;
@@ -164,6 +165,49 @@ export default function Membership() {
             <Arrow />
           </Link>
         </div>
+        <div className="pricing__compare-actions reveal" style={{ textAlign: 'center', marginTop: '40px' }}>
+          <button 
+            className="btn-outline-dark" 
+            onClick={() => setShowComparison(!showComparison)}
+          >
+            {showComparison ? 'Hide Plan Comparison' : 'Compare All Plans'}
+          </button>
+        </div>
+
+        {showComparison && (
+          <div className="pricing__compare-table-wrapper reveal mt-5">
+            <table className="comparison-table">
+              <thead>
+                <tr>
+                  <th className="comparison-table__feature">Features</th>
+                  {COMPARISON_PLANS.map(planId => {
+                    const p = planId === 'single' ? SINGLE_TICKET : MEMBERSHIP_TIERS.find(t => t.id === planId) || CORPORATE;
+                    return (
+                      <th key={planId} className="comparison-table__tier">
+                        {p.name}
+                      </th>
+                    );
+                  })}
+                </tr>
+              </thead>
+              <tbody>
+                {COMPARISON.map((row, i) => (
+                  <tr key={i}>
+                    <td className="comparison-table__feature">{row.label}</td>
+                    {COMPARISON_PLANS.map(planId => {
+                      const val = row[planId];
+                      return (
+                        <td key={planId} className="comparison-table__tier">
+                          {typeof val === 'boolean' ? (val ? <Check /> : <span style={{ color: 'var(--g400)' }}>—</span>) : val}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </section>
   );

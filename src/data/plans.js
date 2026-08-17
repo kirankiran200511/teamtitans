@@ -210,6 +210,7 @@ export const PLANS = [
       'Part of the TITANS WhatsApp community',
       'Access to TITANS Community & Power Team',
       'Onboarding call with the TITANS Team',
+      '30 mins introductory session with Manni (£297 value)',
       'Bring a guest at a discounted price',
       'NIMBUS ENTERPRISE MEMBERSHIP WORTH £4,000',
     ],
