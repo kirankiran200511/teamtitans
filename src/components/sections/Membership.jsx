@@ -165,7 +165,7 @@ export default function Membership() {
             <Arrow />
           </Link>
         </div>
-        <div className="pricing__compare-actions reveal" style={{ textAlign: 'center', marginTop: '40px' }}>
+        <div className="pricing__compare-actions" style={{ textAlign: 'center', marginTop: '40px' }}>
           <button 
             className="btn-outline-dark" 
             onClick={() => setShowComparison(!showComparison)}
@@ -175,7 +175,7 @@ export default function Membership() {
         </div>
 
         {showComparison && (
-          <div className="pricing__compare-table-wrapper reveal mt-5">
+          <div className="pricing__compare-table-wrapper" style={{ marginTop: '40px' }}>
             <table className="comparison-table">
               <thead>
                 <tr>
