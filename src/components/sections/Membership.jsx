@@ -48,8 +48,8 @@ export default function Membership() {
         {/* ── Featured: single ticket ─────────────────────── */}
         <div className="location-selector reveal" style={{ justifyContent: 'center', marginBottom: '16px', marginTop: '32px' }}>
           {LOCATIONS.map(loc => (
-            <button 
-              key={loc.slug} 
+            <button
+              key={loc.slug}
               className={`location-pill ${selectedLocation === loc.slug ? 'active' : ''}`}
               onClick={() => setSelectedLocation(loc.slug)}
             >
@@ -90,13 +90,13 @@ export default function Membership() {
 
         <div className="billing-toggle-wrapper reveal">
           <div className="billing-toggle">
-            <button 
+            <button
               className={`billing-toggle__btn ${billingCycle === 'monthly' ? 'active' : ''}`}
               onClick={() => setBillingCycle('monthly')}
             >
               Monthly
             </button>
-            <button 
+            <button
               className={`billing-toggle__btn ${billingCycle === 'yearly' ? 'active' : ''}`}
               onClick={() => setBillingCycle('yearly')}
             >
@@ -155,9 +155,9 @@ export default function Membership() {
             <strong>Running a team?</strong>
             <span>Corporate membership covers your whole crew - £997/yr.</span>
           </div>
-          <Link 
-            className="btn-fill btn-fill--sm" 
-            style={{ background: '#D40000', color: '#fff', boxShadow: 'none', borderColor: '#D40000' }} 
+          <Link
+            className="btn-fill btn-fill--sm"
+            style={{ background: '#D40000', color: '#fff', boxShadow: 'none', borderColor: '#D40000' }}
             href={`/membership/${CORPORATE.id}`}
           >
             {CORPORATE.cta}
