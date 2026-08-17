@@ -183,7 +183,7 @@ export default function Membership() {
                   {COMPARISON_PLANS.map(planId => {
                     const p = planId === 'single' ? SINGLE_TICKET : MEMBERSHIP_TIERS.find(t => t.id === planId) || CORPORATE;
                     return (
-                      <th key={planId} className="comparison-table__tier">
+                      <th key={planId} className={`comparison-table__tier tier-${planId}`}>
                         {p.name}
                       </th>
                     );
@@ -197,8 +197,14 @@ export default function Membership() {
                     {COMPARISON_PLANS.map(planId => {
                       const val = row[planId];
                       return (
-                        <td key={planId} className="comparison-table__tier">
-                          {typeof val === 'boolean' ? (val ? <Check /> : <span style={{ color: 'var(--g400)' }}>—</span>) : val}
+                        <td key={planId} className={`comparison-table__tier tier-${planId}`}>
+                          {typeof val === 'boolean' ? (
+                            val ? <Check /> : (
+                              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{ margin: '0 auto', color: 'var(--g300)' }}>
+                                <path d="M4 10h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                              </svg>
+                            )
+                          ) : val}
                         </td>
                       );
                     })}

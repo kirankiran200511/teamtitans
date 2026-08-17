@@ -2799,30 +2799,39 @@
 .pricing__compare-table-wrapper {
   margin-top: 40px;
   overflow-x: auto;
-  border-radius: 12px;
+  border-radius: 16px;
   background: #fff;
   border: 1px solid #EAE3DB;
-  box-shadow: 0 2px 14px rgba(35, 12, 6, 0.04);
+  box-shadow: 0 12px 48px rgba(35, 12, 6, 0.06);
 }
 
 .comparison-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   text-align: left;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .comparison-table th,
 .comparison-table td {
-  padding: 16px 20px;
-  border-bottom: 1px solid #EAE3DB;
+  padding: 18px 24px;
+  border-bottom: 1px solid #f2ece4;
+  transition: background-color 0.2s ease;
 }
 
 .comparison-table th {
+  font-family: var(--ff-heading);
   font-weight: 700;
-  color: var(--g800);
-  background: #faf8f5;
+  font-size: 1.1rem;
+  color: var(--navy);
+  background: #fff;
   white-space: nowrap;
+  border-bottom: 2px solid #EAE3DB;
+}
+
+.comparison-table tbody tr:hover td {
+  background-color: #faf8f5;
 }
 
 .comparison-table__feature {
@@ -2832,19 +2841,32 @@
   position: sticky;
   left: 0;
   background: #fff;
+  z-index: 2;
 }
 
-.comparison-table th.comparison-table__feature {
-  background: #faf8f5;
+.comparison-table tbody tr:hover td.comparison-table__feature {
+  background-color: #faf8f5;
 }
 
 .comparison-table__tier {
   text-align: center;
+  color: var(--g700);
+}
+
+/* Highlight the VIP Silver column */
+.comparison-table th.tier-silver,
+.comparison-table td.tier-silver {
+  background-color: #faf8f5;
+}
+.comparison-table tbody tr:hover td.tier-silver {
+  background-color: #f2ece4;
 }
 
 .comparison-table__tier .plan__check {
   color: var(--gold);
   margin: 0 auto;
+  width: 22px;
+  height: 22px;
 }
 
 .comparison-table tbody tr:last-child td {
