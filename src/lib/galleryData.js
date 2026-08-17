@@ -7,7 +7,7 @@ export const CATEGORIES = [
   {
     id: 'coffee',
     label: 'Coffee Mornings & Site Tours',
-    photos: Array.from({ length: 4 }, (_, i) => `/images/gallery/coffee${i + 1}.webp`),
+    photos: Array.from({ length: 8 }, (_, i) => `/images/gallery/coffee${i + 1}.webp`),
   },
   {
     id: 'social',

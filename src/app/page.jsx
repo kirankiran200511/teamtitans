@@ -11,15 +11,15 @@ import Faq from '../components/sections/Faq';
 
 export default function Home() {
   useScrollReveal('home');
-  
+
   return (
     <>
       <Hero />
       <MeetTheHost />
       <Speakers />
+      <Partners />
       <Benefits />
       <Membership />
-      <Partners />
       <Gallery />
       <Faq />
     </>

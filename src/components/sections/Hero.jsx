@@ -95,46 +95,7 @@ function Stat({ stat, run }) {
   );
 }
 
-/** Drawn London skyline — only shown while the composite backdrop is missing. */
-function LondonSkyline() {
-  return (
-    <div className="hero__skyline" aria-hidden="true">
-      <svg viewBox="0 0 1440 200" preserveAspectRatio="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="120" cy="100" r="55" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.7" />
-        <line x1="120" y1="155" x2="120" y2="200" stroke="currentColor" strokeWidth="3" />
-        <rect x="200" y="140" width="25" height="60" rx="1" />
-        <rect x="230" y="120" width="20" height="80" rx="1" />
-        <rect x="255" y="150" width="18" height="50" rx="1" />
-        <rect x="278" y="130" width="22" height="70" rx="1" />
-        <polygon points="380,30 388,200 372,200" />
-        <ellipse cx="440" cy="130" rx="18" ry="55" />
-        <rect x="510" y="100" width="20" height="100" rx="1" />
-        <polygon points="520,75 530,95 510,95" />
-        <rect x="530" y="140" width="60" height="6" rx="1" />
-        <path d="M530 140 Q560 125 590 140" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <rect x="590" y="100" width="20" height="100" rx="1" />
-        <polygon points="600,75 610,95 590,95" />
-        <rect x="660" y="90" width="22" height="110" rx="1" />
-        <rect x="687" y="70" width="18" height="130" rx="1" />
-        <rect x="710" y="100" width="20" height="100" rx="1" />
-        <rect x="800" y="140" width="60" height="60" rx="2" />
-        <ellipse cx="830" cy="140" rx="30" ry="20" />
-        <ellipse cx="830" cy="130" rx="16" ry="16" />
-        <rect x="910" y="60" width="8" height="140" rx="1" />
-        <rect x="980" y="60" width="22" height="140" rx="1" />
-        <polygon points="991,25 1006,55 976,55" />
-        <rect x="1020" y="130" width="80" height="70" rx="1" />
-        <rect x="1140" y="120" width="22" height="80" rx="1" />
-        <rect x="1192" y="110" width="24" height="90" rx="1" />
-        <path d="M1280 200 L1280 110 Q1300 90 1320 110 L1320 200 Z" />
-        <rect x="1340" y="130" width="20" height="70" rx="1" />
-        <rect x="1386" y="155" width="22" height="45" rx="1" />
-        <rect x="1414" y="140" width="26" height="60" rx="1" />
-        <rect x="0" y="196" width="1440" height="4" />
-      </svg>
-    </div>
-  );
-}
+
 
 export default function Hero() {
   const [photo, setPhoto] = useState('pending');
@@ -173,17 +134,16 @@ export default function Hero() {
           />
         )}
         <div className="hero__scrim" />
-        <div className="hero__glow" />
+        <div className="bh-orb bh-orb--gold" />
+        <div className="bh-orb bh-orb--red" />
       </div>
 
       <div className="hero__inner">
         <div className="hero__badge">
           <span className="hero__badge-stars" aria-hidden="true">
-            {[0, 1, 2, 3, 4].map((i) => (
-              <svg key={i} width="16" height="16" viewBox="0 0 14 14" fill="currentColor">
-                <path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.07l-3.52 1.78.67-3.93L1.3 5.14l3.94-.57z" />
-              </svg>
-            ))}
+            <svg width="16" height="16" viewBox="0 0 14 14" fill="currentColor">
+              <path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.07l-3.52 1.78.67-3.93L1.3 5.14l3.94-.57z" />
+            </svg>
           </span>
           4.9 from 10K+ attendees
         </div>
@@ -215,8 +175,6 @@ export default function Hero() {
           </a>
         </div>
       </div>
-
-      <LondonSkyline />
 
       <div className="hero__stats" ref={stripRef}>
         <div className="hero__stats-inner">

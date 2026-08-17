@@ -75,6 +75,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-padding-top: 80px;
+  zoom: 0.9;
 }
 
 body {
@@ -245,7 +246,7 @@ h6 {
 }
 
 .section-title {
-  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
   letter-spacing: -1px;
   margin-bottom: 18px;
 }
@@ -465,60 +466,220 @@ h6 {
   background: var(--off-white);
 }
 
-.included__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 56px;
+/* Warm wash behind the heading so the section is not a flat slab of grey. */
+.included::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -8%;
+  width: 780px;
+  height: 640px;
+  transform: translateY(-50%);
+  background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.11), transparent 66%);
+  pointer-events: none;
 }
 
-.benefit-card {
-  background: var(--white);
-  border-radius: 20px;
-  padding: 40px 28px;
-  border: 1px solid var(--g200);
-  transition: all 0.5s var(--ease);
-  text-align: center;
+/* Stack the heading above the inclusions list */
+.included__layout {
   position: relative;
-  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px;
 }
 
-.benefit-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--gold-border);
-  box-shadow: var(--shadow-lg);
+.included__aside {
+  text-align: center;
 }
 
-.benefit-card__icon {
-  width: 68px;
-  height: 68px;
-  margin: 0 auto 22px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, var(--gold-glass), rgba(245, 158, 11, 0.03));
-  border: 1px solid var(--gold-border);
+.included__aside .section-subtitle {
+  font-size: 1rem;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* ── The list ────────────────────────────────────────── */
+.ilist {
+  position: relative;
+  padding-left: 26px;
+}
+
+/* Track down the left edge; the gold fill draws in with the list. */
+.ilist__rail {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--g200);
+  overflow: hidden;
+}
+
+.ilist__rail-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  transform: scaleY(0);
+  transform-origin: top;
+  background: linear-gradient(180deg, var(--gold), var(--gold-light) 60%, rgba(245, 158, 11, 0.15));
+}
+
+.ilist.visible .ilist__rail-fill {
+  animation: railDraw 1.8s 0.2s var(--ease) forwards;
+}
+
+@keyframes railDraw {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* ── A row ───────────────────────────────────────────── */
+.irow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  align-items: start;
+  gap: 20px;
+  padding: 24px 20px 24px 18px;
+  border-radius: 16px;
+  transition: background 0.45s var(--ease), transform 0.45s var(--ease);
+}
+
+.irow + .irow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 18px;
+  right: 20px;
+  height: 1px;
+  background: var(--g200);
+  transition: opacity 0.35s var(--ease);
+}
+
+.irow:hover {
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.09), rgba(245, 158, 11, 0.01) 70%, transparent);
+  transform: translateX(6px);
+}
+
+.irow:hover::before,
+.irow:hover + .irow::before {
+  opacity: 0;
+}
+
+/* Dot on the rail, level with the row's icon. */
+.irow__marker {
+  position: absolute;
+  left: -29px;
+  top: 38px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--off-white);
+  box-shadow: 0 0 0 2px var(--gold-pale), 0 0 0 5px var(--off-white);
+  transition: background var(--t), transform var(--t), box-shadow var(--t);
+}
+
+.irow:hover .irow__marker {
+  background: var(--gold);
+  transform: scale(1.3);
+  box-shadow: 0 0 0 2px var(--gold), 0 0 0 5px var(--off-white), 0 0 14px rgba(245, 158, 11, 0.6);
+}
+
+.irow__icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
-  transition: all var(--t);
+  color: var(--gold-dark);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.13), rgba(245, 158, 11, 0.03));
+  border: 1px solid var(--gold-border);
+  transition: transform 0.5s var(--ease-bounce), box-shadow var(--t), color var(--t);
 }
 
-.benefit-card:hover .benefit-card__icon {
-  transform: scale(1.1) rotate(-3deg);
+.irow__icon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.irow:hover .irow__icon {
+  transform: translateY(-2px) scale(1.08) rotate(-5deg);
   box-shadow: var(--shadow-gold);
+  color: var(--gold);
 }
 
-.benefit-card__title {
-  font-size: 1.05rem;
-  margin-bottom: 10px;
+/* Icons draw themselves once the row scrolls into view. */
+.irow__icon svg path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.irow.visible .irow__icon svg path {
+  animation: iconDraw 0.9s var(--ease-smooth) forwards;
+}
+
+.irow.visible .irow__icon svg path:nth-child(2) { animation-delay: 0.12s; }
+.irow.visible .irow__icon svg path:nth-child(3) { animation-delay: 0.24s; }
+.irow.visible .irow__icon svg path:nth-child(4) { animation-delay: 0.36s; }
+.irow.visible .irow__icon svg path:nth-child(5) { animation-delay: 0.44s; }
+.irow.visible .irow__icon svg path:nth-child(6) { animation-delay: 0.52s; }
+
+@keyframes iconDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.irow__body {
+  padding-top: 2px;
+}
+
+/* Deliberately no colour shift on hover — the rows are not links, and a gold
+   title reads as one. The marker, icon and numeral carry the hover instead. */
+.irow__title {
+  font-size: 1.08rem;
+  margin-bottom: 6px;
   color: var(--navy);
 }
 
-.benefit-card__desc {
-  font-size: 0.88rem;
+.irow__desc {
+  font-size: 0.9rem;
   color: var(--g600);
   line-height: 1.65;
+  max-width: 46ch;
 }
+
+/* Ghost numeral — keeps the column ordered without shouting. */
+.irow__num {
+  align-self: start;
+  padding-top: 8px;
+  font-family: var(--ff-mono);
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--g300);
+  letter-spacing: -1px;
+  transition: color var(--t), transform 0.45s var(--ease);
+}
+
+.irow:hover .irow__num {
+  color: var(--gold);
+  transform: scale(1.1);
+}
+
+/* Rows slide in from the rail rather than straight up. */
+.irow.reveal {
+  transform: translateX(28px);
+}
+
+.irow.reveal.visible {
+  transform: translateX(0);
+}
+
 
 /* ========================================================
    PARTNERS
@@ -804,9 +965,21 @@ h6 {
     --section-pad: 88px;
   }
 
-  .paths__grid,
-  .included__grid {
+  .paths__grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .included__layout {
+    gap: 44px;
+  }
+
+  .included__aside {
+    position: static;
+  }
+
+  /* Full-width rows would strand the numeral miles from the text. */
+  .ilist {
+    max-width: 780px;
   }
 }
 
@@ -816,9 +989,38 @@ h6 {
   }
 
   .paths__grid,
-  .included__grid,
   .journey__steps {
     grid-template-columns: 1fr;
+  }
+
+  /* The ghost numeral is the first thing to go when width is tight. */
+  .ilist {
+    padding-left: 26px;
+  }
+
+  .irow {
+    grid-template-columns: 42px 1fr;
+    gap: 16px;
+    padding: 20px 14px 20px 16px;
+  }
+
+  .irow + .irow::before {
+    left: 16px;
+    right: 14px;
+  }
+
+  .irow__marker {
+    left: -27px;
+    top: 32px;
+  }
+
+  .irow__icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .irow__num {
+    display: none;
   }
 
   .hero__ctas {
@@ -843,5 +1045,33 @@ h6 {
     right: 16px;
     max-width: none;
     bottom: 80px;
+  }
+}
+/* ========================================================
+   REDUCED MOTION
+   ======================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .irow__icon svg path {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .ilist__rail-fill {
+    transform: scaleY(1);
+    animation: none;
+  }
+
+  .irow,
+  .irow__icon,
+  .irow__num,
+  .irow__marker {
+    transition: none;
+  }
+
+  .irow:hover,
+  .irow:hover .irow__icon,
+  .irow:hover .irow__num,
+  .irow:hover .irow__marker {
+    transform: none;
   }
 }

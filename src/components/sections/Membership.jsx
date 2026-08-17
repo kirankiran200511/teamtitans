@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import { SINGLE_TICKET, MEMBERSHIP_TIERS, CORPORATE } from '../../data/plans';
+import { LOCATIONS } from '../../data/locations';
 
 /**
  * Home pricing section. Plan content lives in data/plans.js so this section and
@@ -27,8 +29,14 @@ const Arrow = () => (
 );
 
 export default function Membership() {
+  const [selectedLocation, setSelectedLocation] = useState(LOCATIONS[0].slug);
+  const [billingCycle, setBillingCycle] = useState('monthly');
+
+  const currentLocation = LOCATIONS.find(loc => loc.slug === selectedLocation);
+  const ticketName = `${SINGLE_TICKET.name} - ${currentLocation?.name || ''}`;
+
   return (
-    <section className="section pricing" id="membership">
+    <section className="section pricing" id="membership" style={{ paddingBottom: '32px' }}>
       <div className="container">
         <div className="text-center reveal">
           <h2 className="section-title">Choose how you join Titans</h2>
@@ -38,10 +46,22 @@ export default function Membership() {
         </div>
 
         {/* ── Featured: single ticket ─────────────────────── */}
-        <div className="ticket reveal reveal-d1">
+        <div className="location-selector reveal" style={{ justifyContent: 'center', marginBottom: '16px', marginTop: '32px' }}>
+          {LOCATIONS.map(loc => (
+            <button 
+              key={loc.slug} 
+              className={`location-pill ${selectedLocation === loc.slug ? 'active' : ''}`}
+              onClick={() => setSelectedLocation(loc.slug)}
+            >
+              {loc.name}
+            </button>
+          ))}
+        </div>
+
+        <div className="ticket reveal reveal-d1" style={{ marginTop: 0 }}>
           <div className="ticket__stub">
             <span className="ticket__kicker">{SINGLE_TICKET.kicker}</span>
-            <h3 className="ticket__name">{SINGLE_TICKET.name}</h3>
+            <h3 className="ticket__name">{ticketName}</h3>
             <p className="ticket__blurb">{SINGLE_TICKET.blurb}</p>
             <ul className="ticket__features">
               {SINGLE_TICKET.features.map((f) => <li key={f}><Check />{f}</li>)}
@@ -68,42 +88,66 @@ export default function Membership() {
           <span>or become a member</span>
         </div>
 
+        <div className="billing-toggle-wrapper reveal">
+          <div className="billing-toggle">
+            <button 
+              className={`billing-toggle__btn ${billingCycle === 'monthly' ? 'active' : ''}`}
+              onClick={() => setBillingCycle('monthly')}
+            >
+              Monthly
+            </button>
+            <button 
+              className={`billing-toggle__btn ${billingCycle === 'yearly' ? 'active' : ''}`}
+              onClick={() => setBillingCycle('yearly')}
+            >
+              Yearly <span className="billing-toggle__badge">2 months free</span>
+            </button>
+          </div>
+        </div>
+
         {/* ── Membership tiers ────────────────────────────── */}
         <div className="pricing__grid">
-          {MEMBERSHIP_TIERS.map((p, i) => (
-            <div
-              className={`plan ${p.popular ? 'plan--popular' : ''} reveal reveal--scale reveal-d${i + 1}`}
-              key={p.id}
-            >
-              {p.popular && (
-                <div className="plan__ribbon"><Star /> Most popular</div>
-              )}
+          {MEMBERSHIP_TIERS.map((p, i) => {
+            const isYearly = billingCycle === 'yearly';
+            const priceNum = parseFloat(p.price);
+            const displayPrice = isYearly ? Math.floor(priceNum * 10) : p.price;
+            const displayPeriod = isYearly ? '/ year' : p.period;
 
-              <div className="plan__head">
-                <h3 className="plan__name">{p.name}</h3>
-                <p className="plan__blurb">{p.blurb}</p>
+            return (
+              <div
+                className={`plan ${p.popular ? 'plan--popular' : ''} reveal reveal--scale reveal-d${i + 1}`}
+                key={p.id}
+              >
+                {p.popular && (
+                  <div className="plan__ribbon"><Star /> Most popular</div>
+                )}
 
-                <div className="plan__price">
-                  <span className="plan__currency">£</span>
-                  <span className="plan__amount">{p.price}</span>
-                  <span className="plan__period">{p.period}</span>
+                <div className="plan__head">
+                  <h3 className="plan__name">{p.name}</h3>
+                  <p className="plan__blurb">{p.blurb}</p>
+
+                  <div className="plan__price">
+                    <span className="plan__currency">£</span>
+                    <span className="plan__amount">{displayPrice}</span>
+                    <span className="plan__period">{displayPeriod}</span>
+                  </div>
+
+                  <Link
+                    className={p.popular ? 'btn-fill plan__cta' : 'btn-outline-dark plan__cta'}
+                    href={`/membership/${p.id}`}
+                  >
+                    {p.cta}
+                  </Link>
                 </div>
 
-                <Link
-                  className={p.popular ? 'btn-fill plan__cta' : 'btn-outline-dark plan__cta'}
-                  href={`/membership/${p.id}`}
-                >
-                  {p.cta}
-                </Link>
+                <ul className="plan__features">
+                  {p.features.map((f) => (
+                    <li key={f}><Check />{f}</li>
+                  ))}
+                </ul>
               </div>
-
-              <ul className="plan__features">
-                {p.features.map((f) => (
-                  <li key={f}><Check />{f}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="pricing__corporate reveal">
@@ -111,7 +155,11 @@ export default function Membership() {
             <strong>Running a team?</strong>
             <span>Corporate membership covers your whole crew - £997/yr.</span>
           </div>
-          <Link className="btn-outline-dark btn-outline-dark--sm" href={`/membership/${CORPORATE.id}`}>
+          <Link 
+            className="btn-fill btn-fill--sm" 
+            style={{ background: '#D40000', color: '#fff', boxShadow: 'none', borderColor: '#D40000' }} 
+            href={`/membership/${CORPORATE.id}`}
+          >
             {CORPORATE.cta}
             <Arrow />
           </Link>

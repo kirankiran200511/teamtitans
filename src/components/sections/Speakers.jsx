@@ -1,4 +1,5 @@
 "use client";
+import React from 'react';
 import { goTo } from '../../lib/router';
 
 /**
@@ -7,65 +8,44 @@ import { goTo } from '../../lib/router';
  * names or bios are given there, so none are invented here.
  */
 const STAGE = [
-  { src: '/images/speakers/s1.webp', span: 'wide' },
-  { src: '/images/speakers/s3.webp' },
-  { src: '/images/speakers/s6.webp' },
-  { src: '/images/speakers/s5.webp' },
-  { src: '/images/speakers/s4.webp' },
-  { src: '/images/speakers/s2.webp', span: 'wide' },
+  { src: '/images/speakers/new_s1.png' },
+  { src: '/images/speakers/new_s2.png' },
+  { src: '/images/speakers/new_s3.png' },
+  { src: '/images/speakers/new_s4.jpg' },
 ];
 
-const PILLARS = [
-  {
-    title: 'Expert keynotes',
-    desc: 'Industry leaders share the thinking behind real decisions - not recycled theory.',
-  },
-  {
-    title: 'Practical education',
-    desc: 'Every session goes beyond theory, with live deals, real numbers, case studies and the property insights you won’t find in a textbook. Leave with knowledge you can put into action.',
-  },
-  {
-    title: 'Real insights',
-    desc: 'Go beyond market headlines. Hear first-hand insights, lessons and strategies from those actively making property moves today.',
-  },
-];
+
 
 export default function Speakers() {
   return (
     <section className="section speakers" id="speakers">
       <div className="container">
         <div className="text-center reveal">
-          <span className="section-label section-label--light">World-class speakers</span>
-          <h2 className="speakers__title">
-            World-Class Speakers.<br />
-            <span className="speakers__title-accent">Real Insights</span>
+          <span className="section-label">World-class speakers</span>
+          <h2 className="section-title" style={{ color: '#fff' }}>
+            Learn from those who are doing it. <span style={{ color: 'var(--gold)' }}>Real Insights</span>
           </h2>
-          <p className="speakers__subtitle">
+          <p className="section-subtitle mx-auto" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
             Every Titans event puts proven operators on stage - developers, investors and
             specialists who are still doing the work they talk about.
           </p>
         </div>
 
-        <div className="speakers__stage reveal reveal-d1">
-          {STAGE.map((s, i) => (
-            <figure
-              className={`speakers__shot ${s.span === 'wide' ? 'speakers__shot--wide' : ''}`}
-              key={s.src}
-            >
-              <img src={s.src} alt={`Speaker on stage at a Titans event (${i + 1} of ${STAGE.length})`} loading="lazy" />
-              <span className="speakers__shot-veil" aria-hidden="true" />
-            </figure>
-          ))}
+        <div className="speakers__ticker-wrap">
+          <div className="speakers__ticker">
+            {[1, 2, 3, 4].map((setIndex) => (
+              <React.Fragment key={setIndex}>
+                {STAGE.map((s, i) => (
+                  <figure className="speakers__shot" key={`${setIndex}-${i}`}>
+                    <img src={s.src} alt={`Speaker at Titans event`} loading="lazy" />
+                  </figure>
+                ))}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
 
-        <div className="speakers__pillars">
-          {PILLARS.map((p, i) => (
-            <div className={`speakers__pillar reveal reveal--scale reveal-d${i + 1}`} key={p.title}>
-              <h4>{p.title}</h4>
-              <p>{p.desc}</p>
-            </div>
-          ))}
-        </div>
+
 
         <div className="speakers__cta reveal">
           <p>Want a seat in the room the next time they speak?</p>
