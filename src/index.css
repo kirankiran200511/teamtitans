@@ -1,5 +1,5 @@
 /* ========================================================
-   TEAM TITANS — PREMIUM HOMEPAGE v3 (Light Theme)
+   TEAM TITANS - PREMIUM HOMEPAGE v3 (Light Theme)
    World-class UI/UX with conversion-optimized design
    ======================================================== */
 
@@ -83,7 +83,11 @@ body {
   color: var(--g600);
   line-height: 1.7;
   background: var(--white);
+  /* `clip` does the same job as `hidden` without turning the body into a
+     scroll container, which would break every `position: sticky` inside it.
+     `hidden` first as the fallback for browsers without `clip`. */
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body.loading {
@@ -638,7 +642,7 @@ h6 {
   padding-top: 2px;
 }
 
-/* Deliberately no colour shift on hover — the rows are not links, and a gold
+/* Deliberately no colour shift on hover - the rows are not links, and a gold
    title reads as one. The marker, icon and numeral carry the hover instead. */
 .irow__title {
   font-size: 1.08rem;
@@ -653,7 +657,7 @@ h6 {
   max-width: 46ch;
 }
 
-/* Ghost numeral — keeps the column ordered without shouting. */
+/* Ghost numeral - keeps the column ordered without shouting. */
 .irow__num {
   align-self: start;
   padding-top: 8px;
@@ -1073,5 +1077,182 @@ h6 {
   .irow:hover .irow__num,
   .irow:hover .irow__marker {
     transform: none;
+  }
+}
+
+/* ========================================================
+   ANIMATED SECTION HEADINGS
+   Driven by the `.visible` class useScrollReveal already sets.
+   ======================================================== */
+
+/* The wrapper opts out of the default .reveal fade - the children carry the
+   animation instead, and a parent fade would flatten all of it. */
+.sh.reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.sh--center {
+  text-align: center;
+}
+
+.sh--center .sh__sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Label: the rule draws out, then the text tightens in ── */
+.sh__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-family: var(--ff-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--red);
+  opacity: 0;
+  letter-spacing: 8px;
+  transition: opacity 0.7s var(--ease), letter-spacing 0.9s var(--ease);
+}
+
+.sh__label::before {
+  content: '';
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red), transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.8s 0.1s var(--ease);
+}
+
+.sh.visible .sh__label {
+  opacity: 1;
+  letter-spacing: 3px;
+}
+
+.sh.visible .sh__label::before {
+  transform: scaleX(1);
+}
+
+/* ── Title: each word rises out of its own mask ──────── */
+/* A wrapping flex row, not inline boxes: React renders the word spans with no
+   whitespace between them, so as inline content the heading would have no line
+   break opportunities at all and would overflow its column on one long line. */
+.sh__title {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.26em;
+}
+
+.sh--center .sh__title {
+  justify-content: center;
+}
+
+.sh__w {
+  display: flex;
+  overflow: hidden;
+  /* Room for descenders, which the mask would otherwise shear off. */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.sh__wi {
+  display: block;
+  transform: translateY(115%) rotate(4deg);
+  transform-origin: left top;
+  transition: transform 0.85s var(--ease);
+  transition-delay: calc(0.1s + var(--i) * 0.055s);
+}
+
+.sh__wi.is-gold {
+  color: var(--gold);
+}
+
+.sh.visible .sh__wi {
+  transform: translateY(0) rotate(0);
+}
+
+/* Gold light sweeping across the words once they have landed. */
+.sh__sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 42%, rgba(245, 158, 11, 0.55) 50%, transparent 58%);
+  mix-blend-mode: plus-lighter;
+  opacity: 0;
+}
+
+.sh.visible .sh__sweep {
+  animation: shSweep 1.15s 0.55s var(--ease-smooth) forwards;
+}
+
+@keyframes shSweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-55%);
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(55%);
+  }
+}
+
+/* ── Subtitle: blurs into focus as it rises ──────────── */
+.sh__sub {
+  opacity: 0;
+  transform: translateY(16px);
+  filter: blur(7px);
+  transition:
+    opacity 0.85s var(--ease),
+    transform 0.85s var(--ease),
+    filter 0.85s var(--ease);
+  transition-delay: calc(0.14s + var(--i) * 0.04s);
+}
+
+.sh.visible .sh__sub {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* ── Dark sections (Speakers) ────────────────────────── */
+.sh--dark .sh__title {
+  color: var(--white);
+}
+
+.sh--dark .sh__sub {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .sh__label,
+  .sh__wi,
+  .sh__sub {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    letter-spacing: 3px;
+    transition: none;
+  }
+
+  .sh__label::before {
+    transform: scaleX(1);
+    transition: none;
+  }
+
+  .sh__sweep,
+  .sh.visible .sh__sweep {
+    display: none;
+    animation: none;
   }
 }

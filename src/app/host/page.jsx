@@ -63,7 +63,7 @@ function HeroSection() {
 
           <p className="bh-hero__sub">
             Lead your own property networking chapter backed by Team Titans.
-            Build your brand, grow your network, and create lasting impact&nbsp;—
+            Build your brand, grow your network, and create lasting impact&nbsp;-
             with full founder support every step of the way.
           </p>
 
@@ -102,7 +102,7 @@ function HeroSection() {
 
 
 /* ══════════════════════════════════════════════
-   BENEFITS — Dark Premium Grid
+   BENEFITS - Dark Premium Grid
    ══════════════════════════════════════════════ */
 const BENEFITS = [
   {
@@ -113,7 +113,7 @@ const BENEFITS = [
       </svg>
     ),
     title: 'Free Access to All Events',
-    desc: 'Attend every Titans event across all UK locations at zero cost. Network, learn, and grow — without paying a penny.',
+    desc: 'Attend every Titans event across all UK locations at zero cost. Network, learn, and grow - without paying a penny.',
   },
   {
     icon: (
@@ -167,7 +167,7 @@ const BENEFITS = [
       </svg>
     ),
     title: 'Direct Founder Support',
-    desc: 'Work directly with Manni Chopra — personal mentoring, strategic guidance, and hands-on help.',
+    desc: 'Work directly with Manni Chopra - personal mentoring, strategic guidance, and hands-on help.',
   }
 ];
 
@@ -182,7 +182,7 @@ function BenefitsSection() {
           <span className="bh-benefits__eyebrow">Exclusive Perks</span>
           <h2 className="bh-benefits__title">Everything you receive as a host</h2>
           <p className="bh-benefits__subtitle">
-            We don't just give you a title — we provide you with an entire business-in-a-box
+            We don't just give you a title - we provide you with an entire business-in-a-box
             loaded with resources, high-level support, and unparalleled exposure.
           </p>
         </div>
@@ -213,12 +213,12 @@ function BenefitsSection() {
 
 
 /* ══════════════════════════════════════════════
-   RESPONSIBILITIES — Timeline
+   RESPONSIBILITIES - Timeline
    ══════════════════════════════════════════════ */
 const RESPONSIBILITIES = [
-  { num: '01', icon: '📋', title: 'Organise Monthly Events', desc: 'Plan and run one property networking event per month in your designated location. We provide the playbook — you bring the energy.' },
+  { num: '01', icon: '📋', title: 'Organise Monthly Events', desc: 'Plan and run one property networking event per month in your designated location. We provide the playbook - you bring the energy.' },
   { num: '02', icon: '🏘️', title: 'Build Your Local Community', desc: 'Grow a thriving community of property professionals in your area. Cultivate relationships and facilitate meaningful introductions.' },
-  { num: '03', icon: '⭐', title: 'Maintain Brand Standards', desc: 'Deliver the Titans experience at every event — premium venues, quality speakers, structured networking, and hot buffet dining.' },
+  { num: '03', icon: '⭐', title: 'Maintain Brand Standards', desc: 'Deliver the Titans experience at every event - premium venues, quality speakers, structured networking, and hot buffet dining.' },
   { num: '04', icon: '📣', title: 'Promote & Market', desc: 'Drive attendance through social media, WhatsApp, and local outreach. We supply content templates and marketing playbooks.' },
   { num: '05', icon: '📊', title: 'Report & Collaborate', desc: 'Share monthly performance updates, attend strategy meetings, and collaborate with the wider host network.' },
 ];
@@ -271,14 +271,14 @@ function ResponsibilitiesSection() {
 
 
 /* ══════════════════════════════════════════════
-   EVENT SUPPORT — Dark section
+   EVENT SUPPORT - Dark section
    ══════════════════════════════════════════════ */
 const SUPPORTS = [
   { icon: '🎯', title: 'Event Playbook', desc: 'Step-by-step guide covering venue selection, speaker booking, pricing strategy, and day-of-event logistics.' },
-  { icon: '🎨', title: 'Brand & Marketing Kit', desc: 'Professional graphics, social media templates, email sequences, and promotional materials — all ready to deploy.' },
+  { icon: '🎨', title: 'Brand & Marketing Kit', desc: 'Professional graphics, social media templates, email sequences, and promotional materials - all ready to deploy.' },
   { icon: '💻', title: 'Tech & Ticketing', desc: 'We set up your event pages, ticketing system, and CRM tools so you can focus on building relationships.' },
   { icon: '🧑‍🏫', title: 'Speaker Network', desc: 'Access our curated list of expert speakers and panel guests who can add immense value to your attendees.' },
-  { icon: '📞', title: 'On-Call Support', desc: 'Direct line to the Titans team for any questions, challenges, or last-minute needs — you\'re never alone.' },
+  { icon: '📞', title: 'On-Call Support', desc: 'Direct line to the Titans team for any questions, challenges, or last-minute needs - you\'re never alone.' },
   { icon: '📈', title: 'Growth Coaching', desc: 'Regular one-on-one sessions to review your chapter\'s performance, set goals, and unlock your next level.' },
 ];
 
@@ -295,7 +295,7 @@ function EventSupportSection() {
           <h2 className="section-title" style={{ color: '#fff' }}>We set you up for success</h2>
           <p className="section-subtitle mx-auto" style={{ color: 'rgba(255,255,255,0.55)' }}>
             Running an event can be daunting. That's why we provide end-to-end support so you can
-            focus on what matters — building your community.
+            focus on what matters - building your community.
           </p>
         </div>
 
@@ -352,7 +352,7 @@ function GrowthSection() {
           <span className="section-label">Your Journey</span>
           <h2 className="section-title">Growth opportunities that compound</h2>
           <p className="section-subtitle mx-auto">
-            Hosting isn't just about running events — it's a launchpad for your personal brand,
+            Hosting isn't just about running events - it's a launchpad for your personal brand,
             network, and property career.
           </p>
         </div>
@@ -396,7 +396,7 @@ function GrowthSection() {
 
 
 /* ══════════════════════════════════════════════
-   SOCIAL PROOF — Photo strip
+   SOCIAL PROOF - Photo strip
    ══════════════════════════════════════════════ */
 function SocialProofSection() {
   const [ref] = useInView(0.1);
@@ -482,7 +482,7 @@ function ApplicationSection() {
           <h2 className="section-title" style={{ color: '#fff' }}>Ready to lead?</h2>
           <p className="section-subtitle mx-auto" style={{ color: 'rgba(255,255,255,0.55)' }}>
             Fill out the form below to start your journey as a Titans Host. No prior event
-            experience needed — just passion, commitment, and a drive to build.
+            experience needed - just passion, commitment, and a drive to build.
           </p>
         </div>
 

@@ -19,6 +19,7 @@ const COLUMNS = [
       { label: 'Pricing', href: '#membership' },
       { label: 'FAQs', href: '#faq' },
       { label: 'About us', href: '#/about' },
+      { label: 'Contact us', href: '#/contact' },
     ],
   },
 ];

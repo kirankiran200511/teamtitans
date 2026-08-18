@@ -1,0 +1,783 @@
+/* ========================================================
+   CONTACT
+   Hero, route picker, form card and aside.
+   Loaded after titans.css.
+   ======================================================== */
+
+/* ── Hero ─────────────────────────────────────────────── */
+.ct-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  padding: calc(var(--header-h) + var(--ticker-h) + clamp(56px, 8vw, 104px)) 0 clamp(56px, 7vw, 92px);
+  background: var(--ink-950);
+  color: #fff;
+}
+
+.ct-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(160deg, #06080E 0%, #0A0E1A 58%, #0D1220 100%);
+}
+
+.ct-hero__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+}
+
+.ct-hero__orb--a {
+  top: -18%;
+  left: -8%;
+  width: 620px;
+  height: 620px;
+  background: rgba(242, 178, 51, 0.2);
+  animation: ctOrbA 18s ease-in-out infinite;
+}
+
+.ct-hero__orb--b {
+  bottom: -26%;
+  right: -6%;
+  width: 540px;
+  height: 540px;
+  background: rgba(242, 178, 51, 0.11);
+  animation: ctOrbB 22s ease-in-out infinite;
+}
+
+@keyframes ctOrbA {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(70px, 50px) scale(1.12);
+  }
+}
+
+@keyframes ctOrbB {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-60px, -40px) scale(0.92);
+  }
+}
+
+.ct-hero__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(62% 60% at 30% 40%, #000 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(62% 60% at 30% 40%, #000 0%, transparent 78%);
+}
+
+.ct-hero__eyebrow {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-family: var(--ff-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  color: var(--brand-300);
+}
+
+/* Words rise out of their own masks, one after another. */
+.ct-hero__title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.26em;
+  font-family: var(--ff-heading);
+  font-size: clamp(2.3rem, 6vw, 4.1rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  color: #fff;
+}
+
+.ct-hero__w {
+  display: flex;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+
+.ct-hero__w > span {
+  display: block;
+  transform: translateY(115%);
+  animation: ctWordRise 0.9s var(--ease) forwards;
+  animation-delay: calc(0.25s + var(--i) * 0.09s);
+}
+
+.ct-hero__w .is-gold {
+  background: linear-gradient(100deg, var(--brand-300), var(--brand));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes ctWordRise {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.ct-hero__sub {
+  max-width: 56ch;
+  margin-top: 24px;
+  font-size: clamp(1rem, 1.5vw, 1.1rem);
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.ct-hero__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.ct-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  transition: all 0.3s var(--ease);
+}
+
+.ct-chip svg {
+  width: 17px;
+  height: 17px;
+  color: var(--brand-300);
+}
+
+.ct-chip:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand-300);
+  color: #fff;
+  background: rgba(242, 178, 51, 0.12);
+}
+
+/* ── Route picker ─────────────────────────────────────── */
+.ct-routes {
+  background: var(--white);
+}
+
+.ct-route-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.ct-route {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 26px 22px 24px;
+  border-radius: 20px;
+  text-align: left;
+  cursor: pointer;
+  background: #fff;
+  border: 1.5px solid #E2E8F0;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.45s var(--ease), border-color 0.4s var(--ease), box-shadow 0.45s var(--ease), background 0.4s var(--ease);
+}
+
+.ct-route:hover {
+  transform: translateY(-5px);
+  border-color: rgba(242, 178, 51, 0.5);
+  box-shadow: var(--shadow-md);
+}
+
+.ct-route.is-active {
+  border-color: var(--brand);
+  background: linear-gradient(150deg, rgba(242, 178, 51, 0.1), #fff 62%);
+  box-shadow: 0 12px 32px rgba(242, 178, 51, 0.22);
+}
+
+.ct-route:focus-visible {
+  outline: 3px solid rgba(242, 178, 51, 0.5);
+  outline-offset: 3px;
+}
+
+.ct-route__icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  color: var(--brand-ink);
+  background: linear-gradient(135deg, rgba(242, 178, 51, 0.14), rgba(242, 178, 51, 0.03));
+  border: 1px solid rgba(242, 178, 51, 0.28);
+  transition: transform 0.5s var(--ease-bounce), box-shadow var(--t);
+}
+
+.ct-route__icon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.ct-route:hover .ct-route__icon,
+.ct-route.is-active .ct-route__icon {
+  transform: translateY(-2px) scale(1.06) rotate(-5deg);
+  box-shadow: var(--shadow-gold);
+}
+
+/* Icons draw themselves in with the card. */
+.ct-route__icon svg path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.ct-route.visible .ct-route__icon svg path {
+  animation: ctDraw 0.9s var(--ease-smooth) forwards;
+}
+
+.ct-route.visible .ct-route__icon svg path:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.ct-route.visible .ct-route__icon svg path:nth-child(3) {
+  animation-delay: 0.22s;
+}
+
+.ct-route.visible .ct-route__icon svg path:nth-child(4) {
+  animation-delay: 0.32s;
+}
+
+@keyframes ctDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.ct-route__title {
+  font-family: var(--ff-heading);
+  font-size: 1.04rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.ct-route__desc {
+  font-size: 0.87rem;
+  line-height: 1.6;
+  color: var(--g500);
+}
+
+.ct-route__mark {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: var(--on-brand);
+  background: var(--brand);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.35s var(--ease), transform 0.4s var(--ease-bounce);
+}
+
+.ct-route.is-active .ct-route__mark {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Form + aside ─────────────────────────────────────── */
+.ct-main {
+  background: var(--off-white);
+}
+
+.ct-main__grid {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.ct-card {
+  padding: clamp(28px, 3.4vw, 42px);
+  border-radius: 24px;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  box-shadow: var(--shadow-lg);
+}
+
+.ct-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.ct-card__head h2 {
+  font-family: var(--ff-heading);
+  font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+/* Mirrors the picker so the form always shows which route it is on. */
+.ct-card__route {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-family: var(--ff-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  color: var(--brand-ink);
+  background: rgba(242, 178, 51, 0.1);
+  border: 1px solid rgba(242, 178, 51, 0.3);
+}
+
+.ct-card__route svg {
+  width: 15px;
+  height: 15px;
+}
+
+.ct-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px 20px;
+}
+
+/* ── Fields: floating label over a growing gold rule ──── */
+.ct-field {
+  position: relative;
+}
+
+.ct-field--wide {
+  grid-column: 1 / -1;
+}
+
+.ct-field input,
+.ct-field textarea {
+  width: 100%;
+  padding: 22px 2px 10px;
+  font-family: var(--ff-body);
+  font-size: 0.98rem;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid #E2E8F0;
+  border-radius: 0;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.3s var(--ease);
+}
+
+.ct-field textarea {
+  min-height: 118px;
+  line-height: 1.7;
+}
+
+.ct-field label {
+  position: absolute;
+  left: 2px;
+  top: 20px;
+  font-size: 0.98rem;
+  color: var(--g500);
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform 0.28s var(--ease), color 0.28s var(--ease);
+}
+
+.ct-field label i {
+  font-style: normal;
+  color: var(--g400);
+}
+
+/* `placeholder=" "` makes :placeholder-shown a reliable "is empty" test, so
+   the label floats without any JS state per field. */
+.ct-field input:focus + label,
+.ct-field textarea:focus + label,
+.ct-field input:not(:placeholder-shown) + label,
+.ct-field textarea:not(:placeholder-shown) + label {
+  transform: translateY(-18px) scale(0.78);
+  color: var(--brand-ink);
+}
+
+.ct-field__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--brand-300), var(--brand));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+
+.ct-field textarea ~ .ct-field__line {
+  bottom: 6px;
+}
+
+.ct-field input:focus ~ .ct-field__line,
+.ct-field textarea:focus ~ .ct-field__line {
+  transform: scaleX(1);
+}
+
+.ct-field__hint {
+  margin-top: 10px;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--g500);
+}
+
+/* ── Submit ───────────────────────────────────────────── */
+.ct-submit {
+  position: relative;
+  overflow: hidden;
+  grid-column: 1 / -1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding: 16px 30px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: var(--ff-heading);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-brand);
+  background: linear-gradient(100deg, var(--brand-300), var(--brand));
+  box-shadow: var(--shadow-gold);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), filter 0.35s var(--ease);
+}
+
+.ct-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(242, 178, 51, 0.4);
+}
+
+.ct-submit:disabled {
+  cursor: progress;
+  filter: saturate(0.85);
+}
+
+.ct-submit__shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.55) 50%, transparent 60%);
+  transform: translateX(-115%);
+}
+
+.ct-submit:hover:not(:disabled) .ct-submit__shine {
+  animation: ctShine 0.75s var(--ease-smooth) forwards;
+}
+
+@keyframes ctShine {
+  to {
+    transform: translateX(115%);
+  }
+}
+
+.ct-submit__spin {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid rgba(23, 17, 10, 0.25);
+  border-top-color: var(--on-brand);
+  animation: ctSpin 0.7s linear infinite;
+}
+
+@keyframes ctSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Success ──────────────────────────────────────────── */
+.ct-done {
+  text-align: center;
+  padding: clamp(18px, 3vw, 40px) 0;
+  animation: ctDoneIn 0.55s var(--ease) both;
+}
+
+@keyframes ctDoneIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.ct-done__mark {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  color: var(--brand-ink);
+  background: rgba(242, 178, 51, 0.12);
+  border: 1px solid rgba(242, 178, 51, 0.32);
+}
+
+/* The circle draws first, then the tick. */
+.ct-done__ring,
+.ct-done__tick {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ctDraw 0.6s var(--ease-smooth) forwards;
+}
+
+.ct-done__tick {
+  animation-delay: 0.42s;
+}
+
+.ct-done h2 {
+  font-family: var(--ff-heading);
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.ct-done p {
+  max-width: 46ch;
+  margin: 14px auto 26px;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--g600);
+}
+
+/* ── Aside ────────────────────────────────────────────── */
+.ct-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ct-aside__card {
+  padding: 28px 26px;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid #E2E8F0;
+  box-shadow: var(--shadow-sm);
+}
+
+.ct-aside__label {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--ff-mono);
+  font-size: 0.64rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--g400);
+}
+
+.ct-aside__team {
+  display: block;
+  font-family: var(--ff-heading);
+  font-size: 1.14rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.ct-aside__mail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--g700);
+  border-top: 1px solid #F1F5F9;
+  transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.ct-aside__mail svg {
+  width: 17px;
+  height: 17px;
+  color: var(--brand-ink);
+  flex-shrink: 0;
+}
+
+.ct-aside__mail:hover {
+  color: var(--brand-ink);
+  transform: translateX(3px);
+}
+
+/* ── Next steps rail ──────────────────────────────────── */
+.ct-steps {
+  position: relative;
+  list-style: none;
+}
+
+.ct-steps::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 22px;
+  bottom: 22px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--brand), rgba(242, 178, 51, 0.15));
+}
+
+.ct-steps li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 14px;
+  padding: 12px 0;
+  opacity: 0;
+  animation: ctStep 0.55s var(--ease) forwards;
+  animation-delay: calc(0.3s + var(--i) * 0.12s);
+}
+
+@keyframes ctStep {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.ct-steps__num {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-family: var(--ff-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--on-brand);
+  background: linear-gradient(140deg, var(--brand-300), var(--brand));
+  box-shadow: 0 0 0 4px #fff;
+}
+
+.ct-steps h3 {
+  font-family: var(--ff-heading);
+  font-size: 0.96rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 4px;
+  padding-top: 5px;
+}
+
+.ct-steps p {
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: var(--g500);
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .ct-route-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ct-main__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .ct-route-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ct-form {
+    grid-template-columns: 1fr;
+  }
+
+  .ct-submit {
+    justify-self: stretch;
+    justify-content: center;
+  }
+
+  .ct-hero__chips {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ct-hero__orb,
+  .ct-hero__w > span,
+  .ct-steps li,
+  .ct-done,
+  .ct-done__ring,
+  .ct-done__tick,
+  .ct-route__icon svg path,
+  .ct-submit__spin {
+    animation: none;
+  }
+
+  .ct-hero__w > span {
+    transform: none;
+  }
+
+  .ct-steps li {
+    opacity: 1;
+  }
+
+  .ct-done__ring,
+  .ct-done__tick,
+  .ct-route__icon svg path {
+    stroke-dashoffset: 0;
+  }
+
+  .ct-route,
+  .ct-route__icon,
+  .ct-chip,
+  .ct-submit,
+  .ct-aside__mail {
+    transition: none;
+  }
+
+  .ct-route:hover,
+  .ct-route:hover .ct-route__icon,
+  .ct-chip:hover,
+  .ct-submit:hover:not(:disabled),
+  .ct-aside__mail:hover {
+    transform: none;
+  }
+}

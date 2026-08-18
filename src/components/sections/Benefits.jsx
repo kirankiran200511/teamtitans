@@ -1,7 +1,8 @@
 "use client";
+import SectionHeading from '../SectionHeading';
 
 /**
- * "What's included" — the heading block pins to the left while the inclusions
+ * "What's included" - the heading block pins to the left while the inclusions
  * read as a single numbered column on the right. A list beats a card grid here:
  * the descriptions are very different lengths, which leaves a grid full of
  * ragged half-empty boxes, and one reading column is quicker to scan than 3x2.
@@ -104,11 +105,12 @@ export default function Benefits() {
   return (
     <section className="section included" id="included">
       <div className="container included__layout">
-        <div className="included__aside reveal">
-          <span className="section-label">Every Event</span>
-          <h2 className="section-title">What's included at every Titans event</h2>
-          <p className="section-subtitle">Every event is designed for maximum value - learning, connections, and a premium experience.</p>
-        </div>
+        <SectionHeading
+          className="included__aside"
+          label="Every Event"
+          title="What's included at every Titans event"
+          subtitle="Every event is designed for maximum value - learning, connections, and a premium experience."
+        />
 
         <ol className="ilist reveal">
           <span className="ilist__rail" aria-hidden="true">

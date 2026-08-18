@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { SINGLE_TICKET, MEMBERSHIP_TIERS, CORPORATE, COMPARISON, COMPARISON_PLANS } from '../../data/plans';
 import { LOCATIONS } from '../../data/locations';
+import SectionHeading from '../SectionHeading';
 
 /**
  * Home pricing section. Plan content lives in data/plans.js so this section and
@@ -28,6 +29,53 @@ const Arrow = () => (
   </svg>
 );
 
+const Chevron = () => (
+  <svg className="cmp-toggle__chev" width="15" height="15" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="m4.5 7 4.5 4.5L13.5 7" />
+  </svg>
+);
+
+/* ── Comparison table ──────────────────────────────────────
+   The header carries the price and a CTA per column, so a decision made while
+   reading the matrix can be acted on without scrolling back to the cards. */
+
+/** Column order comes from COMPARISON_PLANS so it can never drift from the rows. */
+const COMPARE_PLANS = COMPARISON_PLANS.map((id) => {
+  const p = id === 'single' ? SINGLE_TICKET : MEMBERSHIP_TIERS.find((t) => t.id === id) || CORPORATE;
+  return {
+    id,
+    name: p.name,
+    price: p.price,
+    period: p.period,
+    popular: p.popular,
+    // "Choose VIP Silver" is too wide for a column head.
+    shortCta: id === 'single' ? 'Book' : 'Choose',
+  };
+});
+
+/** A tick, a struck-through dash, or the literal value. */
+function Value({ value }) {
+  if (value === true) {
+    return (
+      <>
+        <svg className="cmp__yes" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M5 10.4 8.4 13.8 15 6.8" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        <span className="sr-only">Included</span>
+      </>
+    );
+  }
+  if (value === false) {
+    return (
+      <>
+        <span className="cmp__no" aria-hidden="true" />
+        <span className="sr-only">Not included</span>
+      </>
+    );
+  }
+  return <span className="cmp__val">{value}</span>;
+}
+
 export default function Membership() {
   const [selectedLocation, setSelectedLocation] = useState(LOCATIONS[0].slug);
   const [billingCycle, setBillingCycle] = useState('monthly');
@@ -39,12 +87,10 @@ export default function Membership() {
   return (
     <section className="section pricing" id="membership" style={{ paddingBottom: '32px' }}>
       <div className="container">
-        <div className="text-center reveal">
-          <h2 className="section-title">Choose how you join Titans</h2>
-          <p className="section-subtitle mx-auto">
-            Come once, or become part of the room.
-          </p>
-        </div>
+        <SectionHeading
+          title="Choose how you join Titans"
+          subtitle="Come once, or become part of the room."
+        />
 
         {/* ── Featured: single ticket ─────────────────────── */}
         <div className="location-selector reveal" style={{ justifyContent: 'center', marginBottom: '16px', marginTop: '32px' }}>
@@ -85,7 +131,7 @@ export default function Membership() {
           </div>
         </div>
 
-        <div className="pricing__divider reveal">
+        <div className="pricing__divider reveal" id="membership-plans">
           <span>or become a member</span>
         </div>
 
@@ -101,7 +147,7 @@ export default function Membership() {
               className={`billing-toggle__btn ${billingCycle === 'yearly' ? 'active' : ''}`}
               onClick={() => setBillingCycle('yearly')}
             >
-              Yearly <span className="billing-toggle__badge">2 months free</span>
+              Yearly
             </button>
           </div>
         </div>
@@ -165,53 +211,72 @@ export default function Membership() {
             <Arrow />
           </Link>
         </div>
-        <div className="pricing__compare-actions" style={{ textAlign: 'center', marginTop: '40px' }}>
-          <button 
-            className="btn-outline-dark" 
+        <div className="pricing__compare-actions">
+          <button
+            className={`cmp-toggle ${showComparison ? 'is-open' : ''}`}
             onClick={() => setShowComparison(!showComparison)}
+            aria-expanded={showComparison}
+            aria-controls="plan-comparison"
           >
-            {showComparison ? 'Hide Plan Comparison' : 'Compare All Plans'}
+            {showComparison ? 'Hide the full comparison' : 'Compare all plans side by side'}
+            <Chevron />
           </button>
         </div>
 
         {showComparison && (
-          <div className="pricing__compare-table-wrapper" style={{ marginTop: '40px' }}>
-            <table className="comparison-table">
-              <thead>
-                <tr>
-                  <th className="comparison-table__feature">Features</th>
-                  {COMPARISON_PLANS.map(planId => {
-                    const p = planId === 'single' ? SINGLE_TICKET : MEMBERSHIP_TIERS.find(t => t.id === planId) || CORPORATE;
-                    return (
-                      <th key={planId} className={`comparison-table__tier tier-${planId}`}>
-                        {p.name}
+          <div className="cmp" id="plan-comparison">
+            <p className="cmp__swipe" aria-hidden="true">Swipe to see every plan</p>
+
+            <div className="cmp__scroll">
+              <table className="cmp__table">
+                <caption className="sr-only">Every inclusion, compared across all four plans</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" className="cmp__corner">What you get</th>
+                    {COMPARE_PLANS.map((p) => (
+                      <th
+                        scope="col"
+                        key={p.id}
+                        className={`cmp__head ${p.popular ? 'is-popular' : ''}`}
+                      >
+                        {p.popular && <span className="cmp__ribbon"><Star /> Most popular</span>}
+                        <span className="cmp__plan">{p.name}</span>
+                        <span className="cmp__price">
+                          <b>£{p.price}</b>
+                          <i>{p.period}</i>
+                        </span>
+                        <Link
+                          className={`cmp__cta ${p.popular ? 'is-primary' : ''}`}
+                          href={`/membership/${p.id}`}
+                        >
+                          {p.shortCta}
+                        </Link>
                       </th>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARISON.map((row, i) => (
-                  <tr key={i}>
-                    <td className="comparison-table__feature">{row.label}</td>
-                    {COMPARISON_PLANS.map(planId => {
-                      const val = row[planId];
-                      return (
-                        <td key={planId} className={`comparison-table__tier tier-${planId}`}>
-                          {typeof val === 'boolean' ? (
-                            val ? <Check /> : (
-                              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{ margin: '0 auto', color: 'var(--g300)' }}>
-                                <path d="M4 10h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                              </svg>
-                            )
-                          ) : val}
-                        </td>
-                      );
-                    })}
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {COMPARISON.map((row, i) => (
+                    <tr key={row.label} style={{ '--r': i }}>
+                      <th scope="row" className="cmp__label">{row.label}</th>
+                      {COMPARE_PLANS.map((p) => (
+                        <td
+                          key={p.id}
+                          className={`cmp__cell ${p.popular ? 'is-popular' : ''} ${row[p.id] === false ? 'is-off' : ''}`}
+                        >
+                          <Value value={row[p.id]} />
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="cmp__foot">
+              Every plan includes the hot buffet and the full room. Prices shown are monthly
+              unless stated.
+            </p>
           </div>
         )}
       </div>

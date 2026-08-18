@@ -1,5 +1,5 @@
 /* ========================================================
-   BECOME A HOST — Premium Page Styles
+   BECOME A HOST - Premium Page Styles
    ======================================================== */
 
 /* ── HERO ──────────────────────────────────────────────── */
@@ -220,7 +220,7 @@
 }
 
 
-/* ── BENEFITS — Premium Grid (Light Theme) ─────────────────────── */
+/* ── BENEFITS - Premium Grid (Light Theme) ─────────────────────── */
 .bh-benefits {
   background: #ffffff;
   position: relative;
@@ -347,7 +347,7 @@
 }
 
 
-/* ── RESPONSIBILITIES — Timeline ──────────────────────── */
+/* ── RESPONSIBILITIES - Timeline ──────────────────────── */
 .bh-resp {
   background: #fff;
 }
@@ -467,7 +467,7 @@
 }
 
 
-/* ── EVENT SUPPORT — Dark section ─────────────────────── */
+/* ── EVENT SUPPORT - Dark section ─────────────────────── */
 .bh-support {
   background: linear-gradient(160deg, #0a0e1a 0%, #131a2c 50%, #0a0f1c 100%);
   position: relative;
@@ -657,7 +657,7 @@
 }
 
 
-/* ── SOCIAL PROOF — Photo strip ───────────────────────── */
+/* ── SOCIAL PROOF - Photo strip ───────────────────────── */
 .bh-proof {
   background: linear-gradient(160deg, #0a0e1a, #131a2c, #0a0f1c);
   padding: var(--section-pad) 0;

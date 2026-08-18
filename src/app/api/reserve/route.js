@@ -7,7 +7,7 @@
  *   a Slack incoming webhook, or your own CRM endpoint)
  *
  * The reservation is always written to the server log as a structured line, so
- * nothing is silently lost while that variable is unset — but set it before
+ * nothing is silently lost while that variable is unset - but set it before
  * going live, or the only copy of a booking is in the log.
  */
 
@@ -85,7 +85,7 @@ export async function POST(request) {
       console.error('[reserve] webhook failed:', err.message);
     }
   } else {
-    console.warn('[reserve] RESERVATION_WEBHOOK_URL is not set — this reservation exists only in this log line.');
+    console.warn('[reserve] RESERVATION_WEBHOOK_URL is not set - this reservation exists only in this log line.');
   }
 
   console.log('[reserve]', JSON.stringify(reservation));

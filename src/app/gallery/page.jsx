@@ -4,11 +4,10 @@ import { useSearchParams } from 'next/navigation';
 import useScrollReveal from '../../hooks/useScrollReveal';
 import { CATEGORIES } from '../../lib/galleryData';
 
-const ALL = { id: 'all', label: 'All Moments' };
-const TABS = [ALL, ...CATEGORIES];
+const TABS = CATEGORIES;
 
 /** Only ever trust a `tab` value that matches a real category. */
-const validTab = (id) => (TABS.some((t) => t.id === id) ? id : 'all');
+const validTab = (id) => (TABS.some((t) => t.id === id) ? id : TABS[0].id);
 
 function GalleryContent() {
   const searchParams = useSearchParams();
@@ -24,7 +23,6 @@ function GalleryContent() {
   }, [searchParams]);
 
   const photos = useMemo(() => {
-    if (tab === 'all') return CATEGORIES.flatMap((c) => c.photos);
     return CATEGORIES.find((c) => c.id === tab)?.photos ?? [];
   }, [tab]);
 
@@ -55,7 +53,8 @@ function GalleryContent() {
   };
 
   return (
-    <section className="section gallery" style={{ paddingTop: '160px', paddingBottom: '100px' }}>
+    <>
+      <section className="section gallery" style={{ paddingTop: '160px', paddingBottom: '40px' }}>
       <div className="container">
         <div className="text-center reveal">
           <span className="section-label">Gallery</span>
@@ -100,6 +99,7 @@ function GalleryContent() {
           ))}
         </div>
       </div>
+      </section>
 
       {active !== null && (
         <div className="lightbox" role="dialog" aria-modal="true" aria-label="Gallery photo viewer" onClick={close}>
@@ -125,12 +125,29 @@ function GalleryContent() {
           <div className="lightbox__count">{active + 1} / {photos.length}</div>
         </div>
       )}
-    </section>
+
+      {/* ── Call to Action ───────────────────────────────── */}
+      <section className="section" style={{ backgroundColor: 'var(--ink-950)', color: '#fff', padding: '60px 0', borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}>
+        <div className="container text-center reveal">
+          <span className="section-label section-label--light" style={{ backgroundColor: 'rgba(247, 201, 72, 0.1)', borderColor: 'rgba(247, 201, 72, 0.3)', color: 'var(--brand-300)' }}>Ready to step in?</span>
+          <h2 className="section-title" style={{ color: '#fff', maxWidth: '800px', margin: '0 auto 16px', lineHeight: '1.2' }}>
+            Surround yourself with the people<br />
+            <span style={{ color: 'var(--brand-300)' }}>doing the deals.</span>
+          </h2>
+          <p className="section-subtitle mx-auto" style={{ color: 'rgba(255, 255, 255, 0.7)', maxWidth: '640px', marginBottom: '40px' }}>
+            Join the UK&rsquo;s leading network of property investors, developers, and professionals. Get exclusive access to off-market deals, expert insights, and a community that accelerates your growth.
+          </p>
+          <a className="btn-fill btn-fill--lg" href="/#membership">
+            Secure Your Spot Today
+          </a>
+        </div>
+      </section>
+    </>
   );
 }
 
 export default function GalleryPage() {
-  // No <main> wrapper here — the root layout already renders one.
+  // No <main> wrapper here - the root layout already renders one.
   return (
     <Suspense fallback={
       <div style={{ paddingTop: '160px', textAlign: 'center', minHeight: '60vh' }}>

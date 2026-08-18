@@ -7,6 +7,7 @@ import Benefits from '../components/sections/Benefits';
 import Membership from '../components/sections/Membership';
 import Partners from '../components/sections/Partners';
 import Gallery from '../components/sections/Gallery';
+import Testimonials from '../components/sections/Testimonials';
 import Faq from '../components/sections/Faq';
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
       <Benefits />
       <Membership />
       <Gallery />
+      <Testimonials />
       <Faq />
     </>
   );

@@ -1,5 +1,5 @@
 /* ========================================================
-   MEMBERSHIP PLAN PAGES — /membership/<plan>
+   MEMBERSHIP PLAN PAGES - /membership/<plan>
    The page is built as a ticket: a stub you keep, a
    perforation, and a counterfoil you hand over.
    Tokens come from index.css / titans.css.
@@ -91,7 +91,7 @@
   }
 }
 
-/* Stub — the half you keep */
+/* Stub - the half you keep */
 .tkt__stub {
   position: relative;
   padding: clamp(28px, 3.6vw, 44px);
@@ -210,7 +210,7 @@
   background-position: center;
 }
 
-/* Counterfoil — the half you hand over */
+/* Counterfoil - the half you hand over */
 .tkt__buy {
   position: relative;
   padding: clamp(28px, 3.6vw, 40px);
@@ -327,7 +327,7 @@
   align-items: start;
 }
 
-/* Grid/flex children default to min-width:auto — without this the comparison
+/* Grid/flex children default to min-width:auto - without this the comparison
    table's min-width stretches the page and clips it on narrow screens. */
 .pl-layout > *,
 .pl-content > * { min-width: 0; }
@@ -537,7 +537,15 @@
 .pl-table td.is-current { background: rgba(242, 178, 51, 0.07); }
 
 .pl-table thead th.is-current { box-shadow: inset 0 3px 0 var(--brand); }
-.pl-table__no { color: var(--g300); }
+/* Drawn as a bar rather than a dash character, so no em dash renders. */
+.pl-table__no {
+  display: inline-block;
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--g300);
+  vertical-align: middle;
+}
 .pl-table__val { color: var(--g700); font-weight: 600; }
 .pl-table tbody tr:last-child th,
 .pl-table tbody tr:last-child td { border-bottom: none; }
@@ -587,7 +595,7 @@
 .pl-faq__a { overflow: hidden; transition: max-height 0.35s var(--ease); }
 .pl-faq__a p { margin: 0; padding: 0 20px 18px; font-size: 0.9rem; line-height: 1.7; color: var(--g500); }
 
-/* ── Claim (reserve form) — a ticket stub in light ────── */
+/* ── Claim (reserve form) - a ticket stub in light ────── */
 .claim {
   --notch: 15px;
   position: relative;

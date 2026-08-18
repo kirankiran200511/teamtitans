@@ -5,7 +5,7 @@ import useScrollReveal from '../../hooks/useScrollReveal';
 
 const PROMISE = [
   { title: 'Hot buffet, every ticket', desc: 'No upsells. A full hot buffet is included wherever you join us.' },
-  { title: 'Expert keynote', desc: 'A specialist on stage with a real strategy and real numbers — not theory.' },
+  { title: 'Expert keynote', desc: 'A specialist on stage with a real strategy and real numbers - not theory.' },
   { title: 'Structured networking', desc: 'Everyone introduces themselves. Nobody stands in a corner on their own.' },
   { title: 'One shared community', desc: 'Members move between rooms freely. The WhatsApp group and deal flow are shared.' },
 ];
@@ -79,11 +79,13 @@ export default function Locations() {
         <div className="container loc-hero__inner">
           <span className="loc-hero__eyebrow">Locations</span>
           <h1 className="loc-hero__title">
-            Find your <em>Titans</em> room
+            FIND YOUR TITANS ROOM
           </h1>
+          <p className="loc-hero__sub" style={{ fontWeight: '600', color: 'var(--brand)', marginBottom: '12px' }}>
+            One community. One standard. Multiple locations.
+          </p>
           <p className="loc-hero__sub">
-            Same format, same standard, same community — in three places across the South East.
-            Pick the room that fits your patch and come and meet it.
+            Choose the TITANS room closest to you and connect with ambitious property entrepreneurs in your area with the same quality, energy and experience wherever you join us.
           </p>
 
           <div className="loc-hero__jump">
@@ -136,7 +138,7 @@ export default function Locations() {
           <div>
             <h2>Not sure which room is yours?</h2>
             <p>
-              Tell us where you are and what you are working on — we will point you at the right
+              Tell us where you are and what you are working on - we will point you at the right
               night and introduce you to two people worth meeting when you arrive.
             </p>
           </div>

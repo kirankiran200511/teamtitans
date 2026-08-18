@@ -1,4 +1,5 @@
 "use client";
+import SectionHeading from '../SectionHeading';
 export default function Partners() {
   const logos = [
     { src: '/images/partners/logo1.png', alt: 'STM Consultancy', href: 'https://www.stm-consult.com/' },
@@ -13,11 +14,11 @@ export default function Partners() {
   return (
     <section className="section partners" id="partners" style={{ background: 'var(--white)' }}>
       <div className="container">
-        <div className="text-center reveal">
-          <span className="section-label">Trusted Partners</span>
-          <h2 className="section-title">Partners Behind Your Property Growth</h2>
-          <p className="section-subtitle mx-auto">Each partner is selected to provide genuine value - from finance to legal to development support.</p>
-        </div>
+        <SectionHeading
+          label="Trusted Partners"
+          title="Partners Behind Your Property Growth"
+          subtitle="Each partner is selected to provide genuine value - from finance to legal to development support."
+        />
         
         <div className="reveal reveal-d1" style={{
           display: 'flex',

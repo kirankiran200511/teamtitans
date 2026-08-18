@@ -1,5 +1,6 @@
 "use client";
 import { goTo } from '../../lib/router';
+import SectionHeading from '../SectionHeading';
 
 const CREDENTIALS = ['Developer', 'Entrepreneur', 'Author', 'Mentor', 'Host'];
 
@@ -30,13 +31,11 @@ export default function MeetTheHost() {
   return (
     <section className="section host" id="host">
       <div className="container">
-        <div className="text-center reveal">
-          <span className="section-label">Meet the host</span>
-          <h2 className="section-title">The founder behind Titans</h2>
-          <p className="section-subtitle mx-auto">
-            Manni founded Titans with a simple mission: to inspire one million people to use property to create greater income, freedom and choice.
-          </p>
-        </div>
+        <SectionHeading
+          label="Meet the host"
+          title="The founder behind Titans"
+          subtitle="Manni founded Titans with a simple mission: to inspire one million people to use property to create greater income, freedom and choice."
+        />
 
         <div className="host__grid">
           <div className="host__media reveal reveal--scale">

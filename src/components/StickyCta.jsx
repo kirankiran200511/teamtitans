@@ -32,7 +32,7 @@ export default function StickyCta() {
     <div className={`sticky-cta ${visible ? 'sticky-cta--visible' : ''}`}>
       <div className="container sticky-cta__inner">
         <div className="sticky-cta__text">
-          <strong>Next Titans Event:</strong> Thursday 10th September 2026 — Crowne Plaza, Beaconsfield
+          <strong>Next Titans Event:</strong> Thursday 10th September 2026 - Crowne Plaza, Beaconsfield
         </div>
         <div className="sticky-cta__actions">
           <a href="#membership" className="btn-fill btn-fill--sm" onClick={nav('#membership')}>

@@ -1,17 +1,16 @@
 import Link from 'next/link';
 import { HOME_GALLERY } from '../../lib/galleryData';
+import SectionHeading from '../SectionHeading';
 
 export default function Gallery() {
   return (
     <section className="section gallery" id="gallery">
       <div className="container">
-        <div className="text-center reveal">
-          <span className="section-label">Gallery</span>
-          <h2 className="section-title">Moments from Titans</h2>
-          <p className="section-subtitle mx-auto">
-            A glimpse into our recent events, coffee mornings, and networking sessions.
-          </p>
-        </div>
+        <SectionHeading
+          label="Gallery"
+          title="Moments from Titans"
+          subtitle="A glimpse into our recent events, coffee mornings, and networking sessions."
+        />
 
         <div className="gallery__grid reveal reveal-d1" style={{ marginTop: '60px' }}>
           {HOME_GALLERY.map((item, i) => (

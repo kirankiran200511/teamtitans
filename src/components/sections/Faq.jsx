@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import SectionHeading from '../SectionHeading';
 
 const FAQS = [
   {
@@ -20,7 +21,7 @@ const FAQS = [
   },
   {
     q: "Is there accommodation at the event?",
-    a: "Yes, accommodation is available — ask Titans to get a discount."
+    a: "Yes, accommodation is available - ask Titans to get a discount."
   },
   {
     q: "If I have more questions, who can I speak with?",
@@ -38,11 +39,11 @@ export default function Faq() {
   return (
     <section className="section faq" id="faq">
       <div className="container">
-        <div className="text-center reveal">
-          <span className="section-label">Questions</span>
-          <h2 className="section-title">Frequently asked questions</h2>
-          <p className="section-subtitle mx-auto">Everything you need to know about Titans events and membership.</p>
-        </div>
+        <SectionHeading
+          label="Questions"
+          title="Frequently asked questions"
+          subtitle="Everything you need to know about Titans events and membership."
+        />
         <div className="faq__list">
           {FAQS.map((faq, index) => {
             const isActive = activeIndex === index;

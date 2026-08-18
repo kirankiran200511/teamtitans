@@ -62,7 +62,7 @@ function useDaysUntil(iso) {
 function TicketHero({ plan, days, onClaim }) {
   return (
     <div className="tkt">
-      {/* Stub — the part you keep */}
+      {/* Stub - the part you keep */}
       <div className="tkt__stub">
         <div className="tkt__brand">
           <img src="/images/logo.png" alt="" aria-hidden="true" />
@@ -95,7 +95,7 @@ function TicketHero({ plan, days, onClaim }) {
       {/* Perforation */}
       <div className="tkt__perf" aria-hidden="true" />
 
-      {/* Counterfoil — the part you hand over */}
+      {/* Counterfoil - the part you hand over */}
       <div className="tkt__buy">
         <div className="tkt__price">
           <span className="tkt__currency">£</span>
@@ -120,7 +120,7 @@ function TicketHero({ plan, days, onClaim }) {
 
         <p className="tkt__note">
           <Lock />
-          {plan.enquiryOnly ? 'No payment taken — we confirm details first' : 'No card details on this page'}
+          {plan.enquiryOnly ? 'No payment taken - we confirm details first' : 'No card details on this page'}
         </p>
 
         {days !== null && days > 0 && (
@@ -183,7 +183,7 @@ function StubSummary({ plan, qty, onClaim }) {
 
 function Cell({ value }) {
   if (value === true) return <><Check className="pl-check pl-check--sm" /><span className="sr-only">Included</span></>;
-  if (value === false) return <><span className="pl-table__no" aria-hidden="true">—</span><span className="sr-only">Not included</span></>;
+  if (value === false) return <><span className="pl-table__no" aria-hidden="true" /><span className="sr-only">Not included</span></>;
   return <span className="pl-table__val">{value}</span>;
 }
 
@@ -484,7 +484,7 @@ export default function PlanPage({ params }) {
 
               {plan.statedValue && (
                 <p className="pl-anchor">
-                  <strong>{plan.statedValue}</strong> of listed value — yours for
+                  <strong>{plan.statedValue}</strong> of listed value - yours for
                   <strong> £{(Number(plan.price) * 12).toFixed(2)}</strong> a year.
                 </p>
               )}
@@ -543,7 +543,7 @@ export default function PlanPage({ params }) {
               </div>
             </div>
 
-            {/* Compare — never gated behind a reveal animation */}
+            {/* Compare - never gated behind a reveal animation */}
             <div className="pl-block" id="pl-compare">
               <span className="section-label">Compare</span>
               <h2 className="pl-h2">How {plan.name} compares</h2>
