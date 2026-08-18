@@ -3,6 +3,7 @@
   "/_not-found/page": "/_not-found",
   "/about/page": "/about",
   "/api/reserve/route": "/api/reserve",
+  "/contact/page": "/contact",
   "/gallery/page": "/gallery",
   "/host/page": "/host",
   "/locations/[slug]/page": "/locations/[slug]",

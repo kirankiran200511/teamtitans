@@ -98,6 +98,12 @@
       "namedRegex": "^/api/reserve(?:/)?$"
     },
     {
+      "page": "/contact",
+      "regex": "^/contact(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/contact(?:/)?$"
+    },
+    {
       "page": "/gallery",
       "regex": "^/gallery(?:/)?$",
       "routeKeys": {},

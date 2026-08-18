@@ -25,6 +25,11 @@ const nextConfig = {
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }];
   },
+
+  experimental: {
+    workerThreads: false,
+    cpus: 1
+  },
 };
 
 export default nextConfig;

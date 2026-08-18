@@ -3,6 +3,7 @@
   "/_not-found/page": "app/_not-found/page.js",
   "/about/page": "app/about/page.js",
   "/api/reserve/route": "app/api/reserve/route.js",
+  "/contact/page": "app/contact/page.js",
   "/gallery/page": "app/gallery/page.js",
   "/host/page": "app/host/page.js",
   "/locations/[slug]/page": "app/locations/[slug]/page.js",
