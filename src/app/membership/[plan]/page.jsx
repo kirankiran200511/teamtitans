@@ -497,95 +497,70 @@ export default function PlanPage({ params }) {
               )}
             </div>
 
-            {/* How it works */}
-            <div className="pl-block reveal">
-              <span className="section-label">How it works</span>
-              <h2 className="pl-h2">From here to the room</h2>
-              <ol className="pl-steps">
-                <li>
-                  <span className="pl-steps__num">01</span>
-                  <strong>Reserve your place</strong>
-                  <p>Name and email. Around 20 seconds, no account to create.</p>
-                </li>
-                <li>
-                  <span className="pl-steps__num">02</span>
-                  <strong>The team confirms</strong>
-                  <p>
-                    {plan.enquiryOnly
-                      ? 'A short call to size the membership around your team, then an invoice.'
-                      : 'You get an email confirming your place and how to pay.'}
-                  </p>
-                </li>
-                <li>
-                  <span className="pl-steps__num">03</span>
-                  <strong>Walk in</strong>
-                  <p>{NEXT_EVENT.doors} at {NEXT_EVENT.venue}. Free parking either side of the hotel.</p>
-                </li>
-              </ol>
-            </div>
-
             {/* The room */}
-            <div className="pl-block reveal">
-              <span className="section-label">The room</span>
-              <h2 className="pl-h2">What you’re walking into</h2>
-              <div className="pl-proof">
-                <div className="pl-proof__stats">
-                  <div><strong>10,000+</strong><span>attendees to date</span></div>
-                  <div><strong>120+</strong><span>in the room each event</span></div>
-                  <div><strong>£9M+</strong><span>in deals connected</span></div>
-                  <div><strong>250+</strong><span>expert speakers</span></div>
-                </div>
-                <div className="pl-proof__shots">
-                  {['events1', 'events5', 'events9', 'coffee1'].map((img) => (
-                    <img key={img} src={`/images/gallery/${img}.webp`} alt="" loading="lazy" aria-hidden="true" />
-                  ))}
-                </div>
+          </div>
+          <StubSummary plan={plan} qty={qty} onClaim={scrollToForm} />
+        </div>
+
+        <div className="container pl-content" style={{ maxWidth: '900px', margin: '0 auto', paddingTop: '60px' }}>
+          <div className="pl-block reveal">
+            <span className="section-label">The room</span>
+            <h2 className="pl-h2">What you’re walking into</h2>
+            <div className="pl-proof">
+              <div className="pl-proof__stats">
+                <div><strong>10,000+</strong><span>attendees to date</span></div>
+                <div><strong>120+</strong><span>in the room each event</span></div>
+                <div><strong>£9M+</strong><span>in deals connected</span></div>
+                <div><strong>250+</strong><span>expert speakers</span></div>
               </div>
-            </div>
-
-            {/* Compare - never gated behind a reveal animation */}
-            <div className="pl-block" id="pl-compare">
-              <span className="section-label">Compare</span>
-              <h2 className="pl-h2">How {plan.name} compares</h2>
-              <p className="pl-block__sub">Only the lines that actually differ between plans.</p>
-              <Comparison current={plan.id} />
-              <p className="pl-table__foot">
-                Running a team? <Link href="/membership/corporate">Corporate membership</Link> covers
-                your whole crew for £997 a year.
-              </p>
-            </div>
-
-            {/* Objections */}
-            <div className="pl-block reveal">
-              <span className="section-label">Before you book</span>
-              <h2 className="pl-h2">Questions people ask about {plan.name}</h2>
-              <div className="pl-faq">
-                {plan.faqs.map((f, i) => (
-                  <div className={`pl-faq__item ${openFaq === i ? 'is-open' : ''}`} key={f.q}>
-                    <button
-                      type="button"
-                      className="pl-faq__q"
-                      aria-expanded={openFaq === i}
-                      onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    >
-                      <span>{f.q}</span>
-                      <span className="pl-faq__icon" aria-hidden="true">+</span>
-                    </button>
-                    <div className="pl-faq__a" style={{ maxHeight: openFaq === i ? '320px' : '0' }}>
-                      <p>{f.a}</p>
-                    </div>
-                  </div>
+              <div className="pl-proof__shots">
+                {['events1', 'events5', 'events9', 'coffee1'].map((img) => (
+                  <img key={img} src={`/images/gallery/${img}.webp`} alt="" loading="lazy" aria-hidden="true" />
                 ))}
               </div>
             </div>
+          </div>
 
-            {/* The ask */}
-            <div className="pl-block" id="reserve">
-              <ReserveForm plan={plan} qty={qty} setQty={setQty} formRef={formRef} />
+          {/* Compare - never gated behind a reveal animation */}
+          <div className="pl-block" id="pl-compare">
+            <span className="section-label">Compare</span>
+            <h2 className="pl-h2">How {plan.name} compares</h2>
+            <p className="pl-block__sub">Only the lines that actually differ between plans.</p>
+            <Comparison current={plan.id} />
+            <p className="pl-table__foot">
+              Running a team? <Link href="/membership/corporate">Corporate membership</Link> covers
+              your whole crew for £997 a year.
+            </p>
+          </div>
+
+          {/* Objections */}
+          <div className="pl-block reveal">
+            <span className="section-label">Before you book</span>
+            <h2 className="pl-h2">Questions people ask about {plan.name}</h2>
+            <div className="pl-faq">
+              {plan.faqs.map((f, i) => (
+                <div className={`pl-faq__item ${openFaq === i ? 'is-open' : ''}`} key={f.q}>
+                  <button
+                    type="button"
+                    className="pl-faq__q"
+                    aria-expanded={openFaq === i}
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  >
+                    <span>{f.q}</span>
+                    <span className="pl-faq__icon" aria-hidden="true">+</span>
+                  </button>
+                  <div className="pl-faq__a" style={{ maxHeight: openFaq === i ? '320px' : '0' }}>
+                    <p>{f.a}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <StubSummary plan={plan} qty={qty} onClaim={scrollToForm} />
+          {/* The ask */}
+          <div className="pl-block" id="reserve">
+            <ReserveForm plan={plan} qty={qty} setQty={setQty} formRef={formRef} />
+          </div>
         </div>
       </section>
 

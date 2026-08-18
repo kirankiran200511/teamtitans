@@ -172,7 +172,7 @@ export default function ContactPage() {
                 role="radio"
                 aria-checked={routeId === r.id}
                 onClick={() => setRouteId(r.id)}
-                className={`ct-route reveal reveal--scale reveal-d${i + 1} ${routeId === r.id ? 'is-active' : ''}`}
+                className={`ct-route ${routeId === r.id ? 'is-active' : ''}`}
               >
                 <span className="ct-route__icon">{r.icon}</span>
                 <span className="ct-route__title">{r.title}</span>

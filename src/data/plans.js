@@ -285,13 +285,16 @@ export const COMPARISON = [
   { label: 'Hot buffet + networking', single: true, lite: true, silver: true, gold: true },
   { label: 'Coffee mornings', single: 'Invite', lite: '4', silver: '9', gold: '9' },
   { label: 'Speaker recordings', single: false, lite: 'All videos', silver: 'Full library', gold: 'Full library' },
-  { label: 'Site tours', single: false, lite: '2', silver: '4–6 a year', gold: '4–6 a year' },
-  { label: 'Socials', single: 'Social events', lite: 'Summer BBQ', silver: 'BBQ + Christmas', gold: 'BBQ + Christmas' },
+  { label: 'Site tours', single: false, lite: '2 a year', silver: '4–6 a year', gold: '4–6 a year' },
+  { label: 'TITANS Concierge', single: false, lite: true, silver: true, gold: true },
+  { label: 'Deal Clinic', single: false, lite: true, silver: true, gold: true },
   { label: 'WhatsApp community', single: false, lite: true, silver: true, gold: true },
-  { label: 'Guest at a discount', single: false, lite: false, silver: true, gold: true },
+  { label: 'Community & Power Team', single: false, lite: true, silver: true, gold: true },
+  { label: 'Social events', single: false, lite: '3 additional', silver: 'Summer + Christmas + 3 additional', gold: 'Summer + Christmas + 3 additional' },
   { label: 'Intro session with Manni', single: false, lite: false, silver: '30 min', gold: '30 min' },
-  { label: '1:1 mentoring', single: false, lite: false, silver: false, gold: '4 sessions' },
-  { label: 'Strategy sessions', single: false, lite: false, silver: false, gold: '4 a year' },
+  { label: 'Guest at a discount', single: false, lite: false, silver: true, gold: true },
+  { label: 'Onboarding call', single: false, lite: false, silver: false, gold: true },
+  { label: 'Nimbus Enterprise Membership', single: false, lite: false, silver: false, gold: true },
 ];
 
 /** Columns shown in the comparison table (corporate is quoted separately). */
